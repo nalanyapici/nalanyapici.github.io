@@ -7,80 +7,58 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #f8bbd0;
+            --primary: #fce4ec;
             --primary-dark: #f06292;
             --accent: #d4af37;
             --text: #4a4a4a;
-            --bg: #fff5f8;
-            --glass: rgba(255, 255, 255, 0.85);
+            --bg: #fffcfd;
+            --white: #ffffff;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg);
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(248, 187, 208, 0.3) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(212, 175, 55, 0.15) 0%, transparent 20%);
+                radial-gradient(circle at 0% 0%, #f8bbd0 0%, transparent 25%),
+                radial-gradient(circle at 100% 100%, #d4af3722 0%, transparent 25%);
             color: var(--text);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden;
-        }
-
-        .sparkle {
-            position: fixed;
-            color: var(--accent);
-            opacity: 0.3;
-            pointer-events: none;
-            z-index: 0;
+            padding: 20px;
         }
 
         .container {
-            width: 90%;
-            max-width: 500px;
-            background: var(--glass);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(240, 98, 146, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            width: 100%;
+            max-width: 450px;
+            background: var(--white);
+            padding: 40px 30px;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(240, 98, 146, 0.1);
             text-align: center;
-            position: relative;
-            z-index: 1;
+            border: 1px solid #f8bbd055;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--primary-dark);
-            margin-bottom: 10px;
-            font-weight: 700;
+            margin-bottom: 5px;
         }
 
-        p.subtitle {
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            color: #888;
-            letter-spacing: 1px;
+        .subtitle {
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: #aaa;
             text-transform: uppercase;
+            margin-bottom: 40px;
         }
 
-        .step {
-            display: none;
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        .step.active {
-            display: block;
-        }
+        .step { display: none; }
+        .step.active { display: block; animation: fadeIn 0.6s ease; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -89,63 +67,61 @@
 
         label {
             display: block;
-            margin-bottom: 15px;
-            font-weight: 600;
             font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: #555;
         }
 
+        /* Slider Styles */
         input[type=range] {
             width: 100%;
-            margin: 20px 0;
             -webkit-appearance: none;
-            background: transparent;
-        }
-
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 8px;
-            background: #eee;
-            border-radius: 10px;
+            height: 6px;
+            background: #f1f1f1;
+            border-radius: 5px;
+            outline: none;
+            margin-bottom: 10px;
         }
 
         input[type=range]::-webkit-slider-thumb {
-            height: 24px;
-            width: 24px;
-            border-radius: 50%;
-            background: var(--primary-dark);
             -webkit-appearance: none;
-            margin-top: -8px;
-            box-shadow: 0 0 10px rgba(240, 98, 146, 0.4);
+            width: 24px;
+            height: 24px;
+            background: var(--primary-dark);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(240, 98, 146, 0.3);
         }
 
         .slider-labels {
             display: flex;
             justify-content: space-between;
-            font-size: 0.8rem;
-            color: #999;
-            margin-bottom: 30px;
+            font-size: 0.75rem;
+            color: #bbb;
+            margin-bottom: 40px;
         }
 
+        /* Button Styles */
         .btn-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         button {
-            padding: 15px 25px;
+            padding: 16px;
             border: none;
-            border-radius: 15px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
+            border-radius: 20px;
+            font-family: inherit;
             font-weight: 600;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            transition: 0.3s;
             font-size: 1rem;
         }
 
         .btn-option {
-            background: white;
+            background: #fff;
             color: var(--primary-dark);
             border: 2px solid var(--primary);
         }
@@ -153,21 +129,23 @@
         .btn-option.selected {
             background: var(--primary-dark);
             color: white;
+            border-color: var(--primary-dark);
         }
 
         .btn-next {
             background: var(--accent);
             color: white;
+            margin-top: 20px;
             width: 100%;
-            margin-top: 30px;
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
         }
 
-        .result-card {
-            background: white;
+        .result-box {
+            background: #fff9fa;
+            border: 2px dashed var(--primary);
             padding: 30px;
-            border-radius: 20px;
-            margin-top: 20px;
-            border: 1px dashed var(--accent);
+            border-radius: 25px;
+            margin: 20px 0;
         }
 
         .result-title {
@@ -177,148 +155,116 @@
             margin-bottom: 10px;
         }
 
-        .icon-box {
-            font-size: 3rem;
-            margin-bottom: 20px;
-        }
+        .icon { font-size: 3.5rem; margin-bottom: 15px; }
     </style>
 </head>
 <body>
 
-    <div class="sparkle" style="top: 10%; left: 10%;">✦</div>
-    <div class="sparkle" style="top: 20%; right: 15%;">✧</div>
-    <div class="sparkle" style="bottom: 15%; left: 20%;">✦</div>
-    <div class="sparkle" style="bottom: 10%; right: 10%;">✧</div>
-
     <div class="container">
-        <header>
-            <h1>GlowGrad</h1>
-            <p class="subtitle">Mezuniyet Elbisesi Seçici</p>
-        </header>
+        <h1>GlowGrad</h1>
+        <p class="subtitle">Stil Asistanın</p>
 
-        <!-- Adım 1: Tarz Puanı -->
-        <div id="step-1" class="step active">
-            <div class="icon-box">✨</div>
-            <label>Tarzın nasıl olsun?</label>
-            <input type="range" id="style-x" min="1" max="10" value="5">
+        <!-- Soru 1: Style Score x -->
+        <div id="step1" class="step active">
+            <div class="icon">✨</div>
+            <label>Tarzın hangi yönde?</label>
+            <input type="range" id="x" min="1" max="10" value="5">
             <div class="slider-labels">
-                <span>Zamansız (L)</span>
-                <span>Trend (T)</span>
+                <span>Klasik/Zamansız (L)</span>
+                <span>Modern/Trend (T)</span>
             </div>
-            <button class="btn-next" onclick="nextStep(1, 2)">Sonraki Adım</button>
+            <button class="btn-next" onclick="move(1, 2)">Devam Et</button>
         </div>
 
-        <!-- Adım 2: Mekan Seçimi -->
-        <div id="step-2" class="step">
-            <div class="icon-box">🏰</div>
-            <label>Mekan neresi?</label>
+        <!-- Soru 2: Venue Type y -->
+        <div id="step2" class="step">
+            <div class="icon">📍</div>
+            <label>Mezuniyet nerede?</label>
             <div class="btn-group">
-                <button class="btn-option" id="y-1" onclick="selectVenue(1)">İç Mekan</button>
-                <button class="btn-option" id="y-0" onclick="selectVenue(0)">Dış Mekan</button>
+                <button class="btn-option" id="y1" onclick="setY(1)">İç Mekan (I)</button>
+                <button class="btn-option" id="y0" onclick="setY(0)">Dış Mekan (O)</button>
             </div>
-            <button class="btn-next" id="next-2" disabled onclick="nextStep(2, 3)">Sonraki Adım</button>
+            <button class="btn-next" id="next2" disabled onclick="move(2, 3)">Devam Et</button>
         </div>
 
-        <!-- Adım 3: Öncelik Seçimi -->
-        <div id="step-3" class="step">
-            <div class="icon-box">🎀</div>
-            <label>Senin için hangisi öncelikli?</label>
+        <!-- Soru 3: Priority z -->
+        <div id="step3" class="step">
+            <div class="icon">🎀</div>
+            <label>Hangisi senin için daha önemli?</label>
             <div class="btn-group">
-                <button class="btn-option" id="z-1" onclick="selectPriority(1)">Konfor</button>
-                <button class="btn-option" id="z-0" onclick="selectPriority(0)">Şıklık</button>
+                <button class="btn-option" id="z1" onclick="setZ(1)">Rahatlık & Dans (C)</button>
+                <button class="btn-option" id="z0" onclick="setZ(0)">Göz Alıcı Şıklık (S)</button>
             </div>
-            <button class="btn-next" id="next-3" disabled onclick="calculateResult()">Elbisemi Bul</button>
+            <button class="btn-next" id="next3" disabled onclick="showResult()">Sonucu Gör</button>
         </div>
 
-        <!-- Sonuç Ekranı -->
-        <div id="step-result" class="step">
-            <div class="icon-box">👸</div>
-            <div class="result-card">
-                <p style="text-transform: uppercase; font-size: 0.7rem; color: var(--primary-dark); font-weight: bold;">Mükemmel Seçimin</p>
-                <div id="recommendation-text" class="result-title">Hesaplanıyor...</div>
-                <p id="recommendation-desc" style="font-size: 0.9rem; line-height: 1.6;"></p>
+        <!-- Result Page -->
+        <div id="step4" class="step">
+            <div class="icon">👸</div>
+            <div class="result-box">
+                <p style="font-size: 0.7rem; color: var(--primary-dark); font-weight: bold;">ÖNERİMİZ:</p>
+                <div id="res-title" class="result-title">...</div>
+                <p id="res-desc" style="font-size: 0.9rem; color: #666;"></p>
             </div>
-            <button class="btn-next" onclick="resetApp()">Baştan Başla</button>
+            <button class="btn-next" onclick="location.reload()">Baştan Dene</button>
         </div>
     </div>
 
     <script>
-        let userData = { x: 5, y: null, z: null };
+        let data = { x: 5, y: null, z: null };
 
-        const titles = {
-            'CO': 'Rahat Kombin',
-            'BD': 'Cesur Trend Elbise',
-            'LS': 'Hafif Takım',
-            'OD': 'Dış Mekan Elbisesi',
-            'SD': 'Sade Elbise',
-            'ID': 'İç Mekan Elbisesi',
-            'LO': 'Katmanlı Kombin',
-            'TD': 'Zamansız Zarif Elbise'
-        };
-
-        const descriptions = {
-            'CO': 'Şık ve Rahat bir kombin! Hem stilini konuşturup hem de gecenin tadını çıkarabilirsin.',
-            'BD': 'Cesur ve Trend bir elbise! Tüm gözlerin üzerinde olacağı bir tercih.',
-            'LS': 'Hafif ve şık bir takım. Dış mekan mezuniyetleri için harika bir esinti.',
-            'OD': 'Harika bir Dış Mekan Elbisesi. Işığı ve trendleri en iyi şekilde yansıtır.',
-            'SD': 'Sade ve Zarif bir elbise. İç mekan kutlamaları için en saf şıklık.',
-            'ID': 'Zarif bir İç Mekan Elbisesi. Tıpkı senin gibi sofistike ve zamansız.',
-            'LO': 'Katmanlı bir kombin. Dış mekan havasına uyum sağlayan pratik ve tarz bir seçim.',
-            'TD': 'Zamansız ve Zarif bir elbise. Yıllar sonra fotoğraflara baktığında bile bayılacağın bir klasik.'
-        };
-
-        function nextStep(current, next) {
-            document.getElementById(`step-${current}`).classList.remove('active');
-            document.getElementById(`step-${next}`).classList.add('active');
+        function move(c, n) {
+            document.getElementById('step'+c).classList.remove('active');
+            document.getElementById('step'+n).classList.add('active');
         }
 
-        function selectVenue(val) {
-            userData.y = val;
-            document.getElementById('y-1').classList.remove('selected');
-            document.getElementById('y-0').classList.remove('selected');
-            document.getElementById(`y-${val}`).classList.add('selected');
-            document.getElementById('next-2').disabled = false;
+        function setY(v) {
+            data.y = v;
+            document.getElementById('y1').className = v==1 ? 'btn-option selected' : 'btn-option';
+            document.getElementById('y0').className = v==0 ? 'btn-option selected' : 'btn-option';
+            document.getElementById('next2').disabled = false;
         }
 
-        function selectPriority(val) {
-            userData.z = val;
-            document.getElementById('z-1').classList.remove('selected');
-            document.getElementById('z-0').classList.remove('selected');
-            document.getElementById(`z-${val}`).classList.add('selected');
-            document.getElementById('next-3').disabled = false;
+        function setZ(v) {
+            data.z = v;
+            document.getElementById('z1').className = v==1 ? 'btn-option selected' : 'btn-option';
+            document.getElementById('z0').className = v==0 ? 'btn-option selected' : 'btn-option';
+            document.getElementById('next3').disabled = false;
         }
 
-        function calculateResult() {
-            userData.x = parseInt(document.getElementById('style-x').value);
-            let resultKey = "";
-
-            // Akış Şeması Mantığı:
-            if (userData.x > 5) { // Trendy
-                if (userData.y === 1) { // Indoor
-                    resultKey = (userData.z === 1) ? 'CO' : 'BD';
-                } else { // Outdoor
-                    resultKey = (userData.z === 1) ? 'LS' : 'OD';
+        function showResult() {
+            data.x = parseInt(document.getElementById('x').value);
+            let k = "";
+            
+            // Logic based on Figma Flowchart
+            if(data.x > 5) { // Trendy (T)
+                if(data.y == 1) { // Indoors (I)
+                    k = (data.z == 1 ? 'CO' : 'BD');
+                } else { // Outdoors (O)
+                    k = (data.z == 1 ? 'LS' : 'OD');
                 }
-            } else { // Timeless
-                if (userData.y === 1) { // Indoor
-                    resultKey = (userData.z === 1) ? 'SD' : 'ID';
-                } else { // Outdoor
-                    resultKey = (userData.z === 1) ? 'LO' : 'TD';
+            } else { // Timeless (L)
+                if(data.y == 1) { // Indoors (I)
+                    k = (data.z == 1 ? 'SD' : 'ID');
+                } else { // Outdoors (O)
+                    k = (data.z == 1 ? 'LO' : 'TD');
                 }
             }
 
-            displayResult(resultKey);
-        }
+            const r = {
+                'CO': ['Rahat Kombin', 'Trendy, konforlu ve şık! Gecenin en rahat ama en tarz ismi sen olacaksın.'],
+                'BD': ['Cesur Trend Elbise', 'Tüm bakışlar üzerinde! Sezonun en hit parçalarıyla fark yaratma vakti.'],
+                'LS': ['Hafif Şık Takım', 'Açık havada seni yormayacak, modern ve uçuş uçuş bir görünüm.'],
+                'OD': ['Dış Mekan Elbisesi', 'Doğa ve şıklık bir arada. Dış mekan ışığında parlayacak trend bir seçim.'],
+                'SD': ['Sade ve Şık Elbise', 'Zarafetin en saf hali. Minimalist bir şıklıkla zamansız bir duruş.'],
+                'ID': ['Zarif Salon Elbisesi', 'Klasik bir salon mezuniyeti için en sofistike ve asil tercih.'],
+                'LO': ['Katmanlı Stil', 'Hem klasik hem fonksiyonel. Dış mekanın havasına uyumlu, zamansız bir kombin.'],
+                'TD': ['Zamansız Gece Elbisesi', 'Yıllar sonra bile modası geçmeyecek, fotoğraflarda kusursuz duracak bir klasik.']
+            };
 
-        function displayResult(key) {
-            document.getElementById('step-3').classList.remove('active');
-            document.getElementById('step-result').classList.add('active');
-            document.getElementById('recommendation-text').innerText = titles[key];
-            document.getElementById('recommendation-desc').innerText = descriptions[key];
-        }
-
-        function resetApp() {
-            location.reload();
+            document.getElementById('res-title').innerText = r[k][0];
+            document.getElementById('res-desc').innerText = r[k][1];
+            move(3, 4);
         }
     </script>
 </body>
