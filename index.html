@@ -1,270 +1,515 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GlowGrad | Mezuniyet Elbisesi Rehberi</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Izmir Soulmate Compass | Ritual of Destiny</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #fce4ec;
-            --primary-dark: #f06292;
-            --accent: #d4af37;
-            --text: #4a4a4a;
-            --bg: #fffcfd;
-            --white: #ffffff;
+            --passion-red: #e60000;
+            --deep-crimson: #8b0000;
+            --antique-gold: #f3cf7a;
+            --bright-gold: #ffdf00;
+            --royal-black: #0a0101;
+            --magic-glow: rgba(255, 0, 0, 0.6);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg);
-            background-image: 
-                radial-gradient(circle at 0% 0%, #f8bbd0 0%, transparent 25%),
-                radial-gradient(circle at 100% 100%, #d4af3722 0%, transparent 25%);
-            color: var(--text);
-            min-height: 100vh;
+        body, html {
+            background: var(--royal-black);
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+            cursor: none;
+            height: 100%;
+        }
+
+        /* --- MAGIC BACKGROUND EFFECTS --- */
+        #fairy-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2;
+            background: radial-gradient(circle at 50% 50%, var(--deep-crimson) 0%, var(--royal-black) 100%);
+        }
+
+        .gold-dust {
+            position: absolute;
+            background: var(--bright-gold);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(1px);
+            animation: drift linear infinite;
+        }
+
+        @keyframes drift {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- MAGIC CURSOR --- */
+        #magic-cursor {
+            position: fixed;
+            width: 20px; height: 20px;
+            background: radial-gradient(circle, #fff, var(--bright-gold));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: 0 0 20px #fff, 0 0 40px var(--passion-red), 0 0 60px var(--bright-gold);
+            transform: translate(-50%, -50%);
+        }
+
+        /* --- ENCHANTED INTRO SCREEN --- */
+        #intro-screen {
+            position: fixed; inset: 0;
+            background: linear-gradient(135deg, var(--royal-black) 0%, var(--deep-crimson) 40%, var(--royal-black) 100%);
+            z-index: 9500;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            flex-direction: column;
+            transition: all 2.5s cubic-bezier(0.7, 0, 0.3, 1);
+            overflow: hidden;
         }
 
-        .container {
-            width: 100%;
-            max-width: 450px;
-            background: var(--white);
-            padding: 40px 30px;
-            border-radius: 40px;
-            box-shadow: 0 20px 50px rgba(240, 98, 146, 0.1);
+        /* Golden Ornaments */
+        .ornament {
+            position: absolute;
+            width: 300px; height: 300px;
+            border: 2px solid var(--antique-gold);
+            opacity: 0.3;
+            transform: rotate(45deg);
+            pointer-events: none;
+        }
+        .top-left { top: -150px; left: -150px; border-radius: 40%; }
+        .bottom-right { bottom: -150px; right: -150px; border-radius: 40%; }
+
+        .intro-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 8rem;
+            color: var(--antique-gold);
+            text-shadow: 0 0 30px var(--passion-red), 2px 2px 5px rgba(0,0,0,0.5);
+            cursor: pointer;
+            z-index: 2;
             text-align: center;
-            border: 1px solid #f8bbd055;
+            animation: introGlow 4s infinite alternate;
+        }
+
+        @keyframes introGlow {
+            0% { transform: scale(1); text-shadow: 0 0 20px var(--passion-red), 0 0 40px var(--bright-gold); }
+            100% { transform: scale(1.05); text-shadow: 0 0 50px var(--passion-red), 0 0 80px var(--bright-gold), 0 0 100px var(--passion-red); }
+        }
+
+        .tap-msg {
+            color: var(--antique-gold);
+            letter-spacing: 12px;
+            margin-top: 30px;
+            font-size: 1rem;
+            font-family: 'Cinzel Decorative';
+            animation: pulseFade 2s infinite;
+            z-index: 2;
+        }
+
+        @keyframes pulseFade { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        /* --- MAIN CONTENT --- */
+        #main-content {
+            opacity: 0;
+            transition: opacity 2s ease;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            display: none;
         }
 
         h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            color: var(--primary-dark);
-            margin-bottom: 5px;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 3rem;
+            color: var(--antique-gold);
+            text-align: center;
+            letter-spacing: 15px;
+            margin-bottom: 50px;
+            text-shadow: 0 0 30px rgba(243, 207, 122, 0.6);
         }
 
-        .subtitle {
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            color: #aaa;
-            text-transform: uppercase;
-            margin-bottom: 40px;
+        .ritual-container {
+            background: rgba(20, 0, 0, 0.6);
+            backdrop-filter: blur(25px);
+            border: 2px solid var(--antique-gold);
+            padding: 50px;
+            border-radius: 0 80px 0 80px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            box-shadow: 0 0 80px rgba(255, 0, 0, 0.2), inset 0 0 20px rgba(243, 207, 122, 0.2);
+            position: relative;
         }
 
-        .step { display: none; }
-        .step.active { display: block; animation: fadeIn 0.6s ease; }
+        @media (max-width: 850px) { .ritual-container { grid-template-columns: 1fr; } }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        label {
-            display: block;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-            color: #555;
-        }
-
-        /* Slider Styles */
-        input[type=range] {
-            width: 100%;
-            -webkit-appearance: none;
-            height: 6px;
-            background: #f1f1f1;
-            border-radius: 5px;
-            outline: none;
-            margin-bottom: 10px;
-        }
-
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 24px;
-            height: 24px;
-            background: var(--primary-dark);
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(240, 98, 146, 0.3);
-        }
-
-        .slider-labels {
-            display: flex;
-            justify-content: space-between;
+        .field-box label {
+            font-family: 'Cinzel Decorative', serif;
             font-size: 0.75rem;
-            color: #bbb;
-            margin-bottom: 40px;
+            color: var(--antique-gold);
+            margin-bottom: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            display: block;
         }
 
-        /* Button Styles */
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        button {
+        select {
+            background: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            border: 1px solid var(--antique-gold);
             padding: 16px;
-            border: none;
-            border-radius: 20px;
-            font-family: inherit;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 1rem;
-        }
-
-        .btn-option {
-            background: #fff;
-            color: var(--primary-dark);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-option.selected {
-            background: var(--primary-dark);
-            color: white;
-            border-color: var(--primary-dark);
-        }
-
-        .btn-next {
-            background: var(--accent);
-            color: white;
-            margin-top: 20px;
-            width: 100%;
-            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
-        }
-
-        .result-box {
-            background: #fff9fa;
-            border: 2px dashed var(--primary);
-            padding: 30px;
-            border-radius: 25px;
-            margin: 20px 0;
-        }
-
-        .result-title {
+            border-radius: 15px;
             font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: var(--accent);
-            margin-bottom: 10px;
+            width: 100%;
+            outline: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        select:hover { 
+            box-shadow: 0 0 30px var(--magic-glow);
+            border-color: var(--passion-red);
+            background: #1a0000;
         }
 
-        .icon { font-size: 3.5rem; margin-bottom: 15px; }
+        .magic-btn {
+            padding: 25px 120px;
+            background: linear-gradient(45deg, var(--deep-crimson), var(--passion-red), var(--deep-crimson));
+            background-size: 200% auto;
+            color: #fff;
+            border: 2px solid var(--antique-gold);
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.6rem;
+            letter-spacing: 10px;
+            cursor: pointer;
+            border-radius: 100px;
+            transition: 0.5s;
+            animation: gradientMove 3s infinite;
+        }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        .magic-btn:hover {
+            transform: scale(1.08) translateY(-5px);
+            box-shadow: 0 0 60px var(--passion-red), 0 0 20px var(--bright-gold);
+            letter-spacing: 14px;
+        }
+
+        /* --- RESULTS --- */
+        #result-panel { display: none; margin-top: 100px; animation: fairyFade 3s forwards; }
+        @keyframes fairyFade { from { opacity: 0; filter: blur(20px); } to { opacity: 1; filter: blur(0); } }
+
+        .result-card {
+            background: #000;
+            border: 3px solid var(--antique-gold);
+            border-radius: 60px;
+            overflow: hidden;
+            box-shadow: 0 0 120px rgba(255, 0, 0, 0.4);
+        }
+
+        .img-container { height: 600px; overflow: hidden; position: relative; }
+        .img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #000, transparent); }
+        #res-img { width: 100%; height: 100%; object-fit: cover; transition: 20s linear; }
+
+        .res-text { padding: 80px; text-align: center; }
+        .res-text h2 { font-family: 'Great Vibes'; font-size: 6.5rem; color: var(--antique-gold); margin-bottom: 30px; text-shadow: 0 0 20px var(--passion-red); }
+
+        /* --- EFFECTS --- */
+        .sparkle {
+            position: absolute; pointer-events: none; z-index: 9999;
+            animation: explode 1.5s forwards cubic-bezier(0, 0.5, 0.5, 1);
+        }
+        @keyframes explode {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)) scale(0) rotate(360deg); opacity: 0; }
+        }
+
+        .izmir-spirit { position: fixed; bottom: 30px; left: 30px; font-size: 4rem; opacity: 0.1; filter: sepia(1) saturate(5); }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>GlowGrad</h1>
-        <p class="subtitle">Stil Asistanın</p>
+    <div id="fairy-bg"></div>
+    <div id="magic-cursor"></div>
+    <div class="izmir-spirit">🕊️✨🎡</div>
 
-        <!-- Soru 1: Style Score x -->
-        <div id="step1" class="step active">
-            <div class="icon">✨</div>
-            <label>Tarzın hangi yönde?</label>
-            <input type="range" id="x" min="1" max="10" value="5">
-            <div class="slider-labels">
-                <span>Klasik/Zamansız (L)</span>
-                <span>Modern/Trend (T)</span>
+    <!-- Enhanced Intro Screen -->
+    <div id="intro-screen" onclick="startRitual(event)">
+        <div class="ornament top-left"></div>
+        <div class="ornament bottom-right"></div>
+        <h2 class="intro-title">Ritual of Souls</h2>
+        <p class="tap-msg">INVOKE THE MAGIC</p>
+    </div>
+
+    <div id="main-content">
+        <h1>IZMIR SOULMATE COMPASS</h1>
+
+        <div class="ritual-container">
+            <!-- Questions Sync with Variable List -->
+            <div class="field-box">
+                <label>1. Life Stage (x)</label>
+                <select id="v1" onchange="createMagicEffect(event)">
+                    <option value="S">Young Students (S)</option>
+                    <option value="W">White-Collar Pros (W)</option>
+                    <option value="A">Refined Adults (A)</option>
+                    <option value="N">The Nostalgics (N)</option>
+                    <option value="C">Creative Souls (C)</option>
+                </select>
             </div>
-            <button class="btn-next" onclick="move(1, 2)">Devam Et</button>
+            <div class="field-box">
+                <label>2. Social Pulse (y)</label>
+                <select id="v2" onchange="createMagicEffect(event)">
+                    <option value="K">Chaos (K)</option>
+                    <option value="R">Rhythmic (R)</option>
+                    <option value="L">Lounge (L)</option>
+                    <option value="Q">Quiet (Q)</option>
+                </select>
+            </div>
+            <div class="field-box">
+                <label>3. Meeting Style (i)</label>
+                <select id="v3" onchange="createMagicEffect(event)">
+                    <option value="B">Bold / Icebreaker (B)</option>
+                    <option value="O">Observer (O)</option>
+                    <option value="P">Pro-Specialist (P)</option>
+                    <option value="T">Fate / Accidental (T)</option>
+                </select>
+            </div>
+            <div class="field-box">
+                <label>4. Venue Aesthetic (v)</label>
+                <select id="v4" onchange="createMagicEffect(event)">
+                    <option value="M">Modern / Neon (M)</option>
+                    <option value="E">Aegean / Boho (E)</option>
+                    <option value="H">Heritage / Noir (H)</option>
+                    <option value="Z">Zen (Z)</option>
+                </select>
+            </div>
+            <div class="field-box">
+                <label>5. Music Taste (m)</label>
+                <select id="v5" onchange="createMagicEffect(event)">
+                    <option value="G">Analog (G)</option>
+                    <option value="J">Digital (J)</option>
+                    <option value="U">Nature (U)</option>
+                    <option value="V">Acoustic (V)</option>
+                </select>
+            </div>
+            <div class="field-box">
+                <label>6. Budget (f)</label>
+                <select id="v6" onchange="createMagicEffect(event)">
+                    <option value="GR">Grass-root (GR)</option>
+                    <option value="ML">Mid-level (ML)</option>
+                    <option value="EX">Executive (EX)</option>
+                    <option value="HG">Hidden Gem (HG)</option>
+                </select>
+            </div>
+            <div class="field-box">
+                <label>7. Transportation (u)</label>
+                <select id="v7" onchange="createMagicEffect(event)">
+                    <option value="FR">Ferry (FR)</option>
+                    <option value="WK">Walking (WK)</option>
+                    <option value="BK">Bike / Skate (BK)</option>
+                    <option value="DR">Driving (DR)</option>
+                </select>
+            </div>
+            <div class="field-box">
+                <label>8. View Preference (p)</label>
+                <select id="v8" onchange="createMagicEffect(event)">
+                    <option value="PL">Panoramic Lights (PL)</option>
+                    <option value="OH">Ocean Horizon (OH)</option>
+                    <option value="TX">Texture (TX)</option>
+                    <option value="GO">Green Oasis (GO)</option>
+                </select>
+            </div>
+            <div class="field-box">
+                <label>9. Timing (t)</label>
+                <select id="v9" onchange="createMagicEffect(event)">
+                    <option value="EB">Early Bird (EB)</option>
+                    <option value="SR">Sunset Ritual (SR)</option>
+                    <option value="MW">Midnight Wanderer (MW)</option>
+                </select>
+            </div>
+            <div class="field-box">
+                <label>10. Weather (w)</label>
+                <select id="v10" onchange="createMagicEffect(event)">
+                    <option value="IB">Imbat Breeze (IB)</option>
+                    <option value="PR">Petrichor (PR)</option>
+                    <option value="WS">Winter Sun (WS)</option>
+                </select>
+            </div>
+            <div class="field-box">
+                <label>11. Hobbies (h)</label>
+                <select id="v11" onchange="createMagicEffect(event)">
+                    <option value="CO">Collector (CO)</option>
+                    <option value="MK">Maker (MK)</option>
+                    <option value="YT">Active / Yoga-Trail (YT)</option>
+                    <option value="IN">Intellectual (IN)</option>
+                    <option value="GZ">Gastronomy Enthusiast (GZ)</option>
+                </select>
+            </div>
+            <div class="field-box">
+                <label>12. Final Intent (z)</label>
+                <select id="v12" onchange="createMagicEffect(event)">
+                    <option value="MC">Meet-Cute (MC)</option>
+                    <option value="DC">Deep Connection (DC)</option>
+                    <option value="FF">Fast Fun (FF)</option>
+                </select>
+            </div>
+            <div class="field-box" style="grid-column: 1 / -1;">
+                <label>13. Clothing Style (s)</label>
+                <select id="v13" onchange="createMagicEffect(event)">
+                    <option value="BO">Boho (BO)</option>
+                    <option value="MN">Minimalist (MN)</option>
+                    <option value="CY">Cyber-Street (CY)</option>
+                </select>
+            </div>
+
+            <div class="btn-wrapper">
+                <button class="magic-btn" onclick="showFate(event)">REVEAL DESTINY</button>
+            </div>
         </div>
 
-        <!-- Soru 2: Venue Type y -->
-        <div id="step2" class="step">
-            <div class="icon">📍</div>
-            <label>Mezuniyet nerede?</label>
-            <div class="btn-group">
-                <button class="btn-option" id="y1" onclick="setY(1)">İç Mekan (I)</button>
-                <button class="btn-option" id="y0" onclick="setY(0)">Dış Mekan (O)</button>
+        <div id="result-panel">
+            <div class="result-card">
+                <div class="img-container">
+                    <img src="" id="res-img">
+                    <div class="img-overlay"></div>
+                </div>
+                <div class="res-text">
+                    <h2 id="res-title"></h2>
+                    <p id="res-desc"></p>
+                    <div style="margin-top: 50px; border-top: 2px solid var(--antique-gold); padding-top: 40px;">
+                        <input type="text" placeholder="Whisper your wish to the stars..." style="background:transparent; border:none; border-bottom:1px solid var(--antique-gold); color:var(--bright-gold); font-family:'Great Vibes'; font-size:2.8rem; width:90%; text-align:center; outline:none;">
+                    </div>
+                </div>
             </div>
-            <button class="btn-next" id="next2" disabled onclick="move(2, 3)">Devam Et</button>
-        </div>
-
-        <!-- Soru 3: Priority z -->
-        <div id="step3" class="step">
-            <div class="icon">🎀</div>
-            <label>Hangisi senin için daha önemli?</label>
-            <div class="btn-group">
-                <button class="btn-option" id="z1" onclick="setZ(1)">Rahatlık & Dans (C)</button>
-                <button class="btn-option" id="z0" onclick="setZ(0)">Göz Alıcı Şıklık (S)</button>
-            </div>
-            <button class="btn-next" id="next3" disabled onclick="showResult()">Sonucu Gör</button>
-        </div>
-
-        <!-- Result Page -->
-        <div id="step4" class="step">
-            <div class="icon">👸</div>
-            <div class="result-box">
-                <p style="font-size: 0.7rem; color: var(--primary-dark); font-weight: bold;">ÖNERİMİZ:</p>
-                <div id="res-title" class="result-title">...</div>
-                <p id="res-desc" style="font-size: 0.9rem; color: #666;"></p>
-            </div>
-            <button class="btn-next" onclick="location.reload()">Baştan Dene</button>
         </div>
     </div>
 
     <script>
-        let data = { x: 5, y: null, z: null };
+        const cursor = document.getElementById('magic-cursor');
+        window.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            if(Math.random() > 0.8) createTail(e.clientX, e.clientY);
+        });
 
-        function move(c, n) {
-            document.getElementById('step'+c).classList.remove('active');
-            document.getElementById('step'+n).classList.add('active');
+        function createTail(x, y) {
+            const s = document.createElement('div');
+            s.className = 'gold-dust';
+            s.style.width = '3px';
+            s.style.height = '3px';
+            s.style.left = x + 'px';
+            s.style.top = y + 'px';
+            s.style.opacity = '1';
+            s.style.animation = 'drift 1s forwards';
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 1000);
         }
 
-        function setY(v) {
-            data.y = v;
-            document.getElementById('y1').className = v==1 ? 'btn-option selected' : 'btn-option';
-            document.getElementById('y0').className = v==0 ? 'btn-option selected' : 'btn-option';
-            document.getElementById('next2').disabled = false;
+        function spawnDust() {
+            const bg = document.getElementById('fairy-bg');
+            for(let i=0; i<30; i++) {
+                const d = document.createElement('div');
+                d.className = 'gold-dust';
+                const size = Math.random() * 4 + 1;
+                d.style.width = size + 'px';
+                d.style.height = size + 'px';
+                d.style.left = Math.random() * 100 + 'vw';
+                d.style.top = Math.random() * 100 + 'vh';
+                d.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                d.style.animationDelay = Math.random() * 10 + 's';
+                document.body.appendChild(d);
+            }
         }
+        spawnDust();
 
-        function setZ(v) {
-            data.z = v;
-            document.getElementById('z1').className = v==1 ? 'btn-option selected' : 'btn-option';
-            document.getElementById('z0').className = v==0 ? 'btn-option selected' : 'btn-option';
-            document.getElementById('next3').disabled = false;
-        }
-
-        function showResult() {
-            data.x = parseInt(document.getElementById('x').value);
-            let k = "";
-            
-            // Logic based on Figma Flowchart
-            if(data.x > 5) { // Trendy (T)
-                if(data.y == 1) { // Indoors (I)
-                    k = (data.z == 1 ? 'CO' : 'BD');
-                } else { // Outdoors (O)
-                    k = (data.z == 1 ? 'LS' : 'OD');
-                }
-            } else { // Timeless (L)
-                if(data.y == 1) { // Indoors (I)
-                    k = (data.z == 1 ? 'SD' : 'ID');
-                } else { // Outdoors (O)
-                    k = (data.z == 1 ? 'LO' : 'TD');
-                }
+        function startRitual(e) {
+            // Explosive Click Effect
+            for(let i=0; i<60; i++) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.innerHTML = ['✨','💖','🌟','🔥'][Math.floor(Math.random()*4)];
+                s.style.left = e.clientX + 'px';
+                s.style.top = e.clientY + 'px';
+                s.style.setProperty('--x', (Math.random() - 0.5) * 1200 + 'px');
+                s.style.setProperty('--y', (Math.random() - 0.5) * 1200 + 'px');
+                document.body.appendChild(s);
+                setTimeout(() => s.remove(), 1500);
             }
 
-            const r = {
-                'CO': ['Rahat Kombin', 'Trendy, konforlu ve şık! Gecenin en rahat ama en tarz ismi sen olacaksın.'],
-                'BD': ['Cesur Trend Elbise', 'Tüm bakışlar üzerinde! Sezonun en hit parçalarıyla fark yaratma vakti.'],
-                'LS': ['Hafif Şık Takım', 'Açık havada seni yormayacak, modern ve uçuş uçuş bir görünüm.'],
-                'OD': ['Dış Mekan Elbisesi', 'Doğa ve şıklık bir arada. Dış mekan ışığında parlayacak trend bir seçim.'],
-                'SD': ['Sade ve Şık Elbise', 'Zarafetin en saf hali. Minimalist bir şıklıkla zamansız bir duruş.'],
-                'ID': ['Zarif Salon Elbisesi', 'Klasik bir salon mezuniyeti için en sofistike ve asil tercih.'],
-                'LO': ['Katmanlı Stil', 'Hem klasik hem fonksiyonel. Dış mekanın havasına uyumlu, zamansız bir kombin.'],
-                'TD': ['Zamansız Gece Elbisesi', 'Yıllar sonra bile modası geçmeyecek, fotoğraflarda kusursuz duracak bir klasik.']
+            const intro = document.getElementById('intro-screen');
+            intro.style.opacity = '0';
+            intro.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                intro.style.display = 'none';
+                const main = document.getElementById('main-content');
+                main.style.display = 'block';
+                setTimeout(() => main.style.opacity = '1', 100);
+            }, 1500);
+        }
+
+        function createMagicEffect(e) {
+            const rect = e.target.getBoundingClientRect();
+            const x = rect.left + rect.width / 2;
+            const y = rect.top + rect.height / 2;
+            for(let i=0; i<15; i++) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.innerHTML = '✨';
+                s.style.left = x + 'px';
+                s.style.top = y + 'px';
+                s.style.setProperty('--x', (Math.random() - 0.5) * 300 + 'px');
+                s.style.setProperty('--y', (Math.random() - 0.5) * 300 + 'px');
+                document.body.appendChild(s);
+                setTimeout(() => s.remove(), 1000);
+            }
+        }
+
+        function showFate(e) {
+            createMagicEffect(e);
+            const x = document.getElementById('v1').value;
+            const z = document.getElementById('v12').value;
+            const v = document.getElementById('v4').value;
+            const f = document.getElementById('v6').value;
+
+            const spots = {
+                "KS": { title: "Kordon Sunset", desc: "A place where thousands of souls witness the daily ritual of the sun. In the chaotic rhythm of the city, your hearts beat in sync with the Aegean Imbat breeze.", img: "https://images.unsplash.com/photo-1590610991399-6f98721665a5?auto=format&fit=crop&w=1200" },
+                "EV": { title: "The Elevator", desc: "Climb towards the stars. A heritage of love where the panoramic lights of Izmir illuminate the deep connection you've been waiting for.", img: "https://images.unsplash.com/photo-1541339902293-d074362efa91?auto=format&fit=crop&w=1200" },
+                "LG": { title: "La Cigale Noir", desc: "Candlelight, red wine, and the whisper of heritage. A sophisticated encounter for refined adults who seek a mature and analog romance.", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200" },
+                "KP": { title: "Küçük Park Pulse", desc: "The energy of youth. A meet-cute happening in the rhythmic chaos of Bornova, where bold icebreakers lead to accidental fate.", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200" },
+                "MT": { title: "Mistral Neon", desc: "Cyber-street fashion under the digital moon. For the midnight wanderers seeking fast fun amidst the texture of modern luxury.", img: "https://images.unsplash.com/photo-1574096079513-d8259312b785?auto=format&fit=crop&w=1200" },
+                "AS": { title: "Zen Gallery", desc: "The quiet intellectual oasis. Where creative makers find each other in the silent texture of art and petrichor.", img: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1200" }
             };
 
-            document.getElementById('res-title').innerText = r[k][0];
-            document.getElementById('res-desc').innerText = r[k][1];
-            move(3, 4);
+            let res = spots["KS"];
+            if(x === 'S') res = spots["KP"];
+            else if(x === 'A' || f === 'EX') res = spots["LG"];
+            else if(x === 'N' || z === 'DC') res = spots["EV"];
+            else if(x === 'C' || v === 'Z') res = spots["AS"];
+            else if(v === 'M' && z === 'FF') res = spots["MT"];
+
+            document.getElementById('res-img').src = res.img;
+            document.getElementById('res-title').innerText = res.title;
+            document.getElementById('res-desc').innerText = res.desc;
+            
+            document.getElementById('result-panel').style.display = 'block';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+            // Final Explosion
+            for(let i=0; i<80; i++) {
+                const s = document.createElement('div');
+                s.className = 'sparkle';
+                s.innerHTML = ['💖','✨','🌟'][Math.floor(Math.random()*3)];
+                s.style.left = e.clientX + 'px';
+                s.style.top = e.clientY + 'px';
+                s.style.setProperty('--x', (Math.random() - 0.5) * 1000 + 'px');
+                s.style.setProperty('--y', (Math.random() - 0.5) * 1000 + 'px');
+                document.body.appendChild(s);
+                setTimeout(() => s.remove(), 2500);
+            }
         }
     </script>
 </body>
