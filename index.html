@@ -3,513 +3,488 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Izmir Soulmate Compass | Ritual of Destiny</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;1,700&display=swap" rel="stylesheet">
+    <title>Izmir Soulmate Compass</title>
+    <!-- Romantic & Fairytale Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel+Decorative:wght@400;700&family=Montserrat:wght@300;400&family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
         :root {
-            --passion-red: #e60000;
-            --deep-crimson: #8b0000;
-            --antique-gold: #f3cf7a;
-            --bright-gold: #ffdf00;
-            --royal-black: #0a0101;
-            --magic-glow: rgba(255, 0, 0, 0.6);
+            --passion-pink: #ff69b4;
+            --fairytale-purple: #4b0082;
+            --dreamy-burgundy: #6a040f;
+            --gold-glow: #ffd700;
+            --ivory-silk: #fffaf0;
+            --magic-white: rgba(255, 255, 255, 0.8);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* Standard cursor removed for the magic thread */
+        * { box-sizing: border-box; margin: 0; padding: 0; cursor: none; }
 
-        body, html {
-            background: var(--royal-black);
-            color: #fff;
-            font-family: 'Playfair Display', serif;
+        body {
+            background: radial-gradient(circle at center, #2d0b0b 0%, #0a0101 100%);
+            color: var(--ivory-silk);
+            font-family: 'Montserrat', sans-serif;
+            min-height: 100vh;
             overflow-x: hidden;
-            cursor: none;
-            height: 100%;
-        }
-
-        /* --- MAGIC BACKGROUND EFFECTS --- */
-        #fairy-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -2;
-            background: radial-gradient(circle at 50% 50%, var(--deep-crimson) 0%, var(--royal-black) 100%);
-        }
-
-        .gold-dust {
-            position: absolute;
-            background: var(--bright-gold);
-            border-radius: 50%;
-            pointer-events: none;
-            filter: blur(1px);
-            animation: drift linear infinite;
-        }
-
-        @keyframes drift {
-            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-
-        /* --- MAGIC CURSOR --- */
-        #magic-cursor {
-            position: fixed;
-            width: 20px; height: 20px;
-            background: radial-gradient(circle, #fff, var(--bright-gold));
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 10000;
-            box-shadow: 0 0 20px #fff, 0 0 40px var(--passion-red), 0 0 60px var(--bright-gold);
-            transform: translate(-50%, -50%);
-        }
-
-        /* --- ENCHANTED INTRO SCREEN --- */
-        #intro-screen {
-            position: fixed; inset: 0;
-            background: linear-gradient(135deg, var(--royal-black) 0%, var(--deep-crimson) 40%, var(--royal-black) 100%);
-            z-index: 9500;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            transition: all 2.5s cubic-bezier(0.7, 0, 0.3, 1);
-            overflow: hidden;
+            perspective: 1000px;
         }
 
-        /* Golden Ornaments */
-        .ornament {
+        /* --- MAGIC BACKGROUND --- */
+        #magic-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+            background: url('https://www.transparenttextures.com/patterns/soft-wallpaper.png');
+        }
+
+        .floating-particle {
             position: absolute;
-            width: 300px; height: 300px;
-            border: 2px solid var(--antique-gold);
-            opacity: 0.3;
-            transform: rotate(45deg);
+            pointer-events: none;
+            animation: floatUp var(--d) linear infinite;
+            opacity: var(--o);
+            color: var(--gold-glow);
+            z-index: 10006;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(110vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); }
+        }
+
+        /* --- INTRO SCREEN --- */
+        #intro-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle, #1a0202 0%, #000 100%);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1.5s ease, visibility 1.5s;
+            cursor: pointer;
+        }
+
+        .soul-orb {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            filter: blur(60px);
+            mix-blend-mode: screen;
+            opacity: 0.7;
             pointer-events: none;
         }
-        .top-left { top: -150px; left: -150px; border-radius: 40%; }
-        .bottom-right { bottom: -150px; right: -150px; border-radius: 40%; }
+        .orb-1 { background: var(--passion-pink); animation: orbit 6s infinite ease-in-out; }
+        .orb-2 { background: #00ffff; animation: orbit 6s infinite ease-in-out reverse; }
 
-        .intro-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: 8rem;
-            color: var(--antique-gold);
-            text-shadow: 0 0 30px var(--passion-red), 2px 2px 5px rgba(0,0,0,0.5);
-            cursor: pointer;
-            z-index: 2;
+        @keyframes orbit {
+            0% { transform: translate(-100px, 0) scale(1); }
+            50% { transform: translate(100px, 50px) scale(1.4); }
+            100% { transform: translate(-100px, 0) scale(1); }
+        }
+
+        #intro-message {
+            font-family: 'Pinyon Script', cursive;
+            font-size: clamp(2.2rem, 9vw, 4rem);
+            color: var(--gold-glow);
             text-align: center;
-            animation: introGlow 4s infinite alternate;
+            z-index: 10001;
+            text-shadow: 0 0 25px var(--gold-glow);
+            animation: pulseText 3s infinite;
+            pointer-events: none;
+            padding: 30px;
         }
 
-        @keyframes introGlow {
-            0% { transform: scale(1); text-shadow: 0 0 20px var(--passion-red), 0 0 40px var(--bright-gold); }
-            100% { transform: scale(1.05); text-shadow: 0 0 50px var(--passion-red), 0 0 80px var(--bright-gold), 0 0 100px var(--passion-red); }
+        @keyframes pulseText {
+            0%, 100% { opacity: 0.4; transform: scale(0.92); }
+            50% { opacity: 1; transform: scale(1.08); }
         }
 
-        .tap-msg {
-            color: var(--antique-gold);
-            letter-spacing: 12px;
-            margin-top: 30px;
-            font-size: 1rem;
-            font-family: 'Cinzel Decorative';
-            animation: pulseFade 2s infinite;
-            z-index: 2;
+        /* --- RED THREAD & CURSOR --- */
+        #red-thread {
+            position: fixed;
+            width: 24px; height: 24px;
+            background: radial-gradient(circle, #ff0000 30%, transparent 80%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10005;
+            box-shadow: 0 0 25px #ff0000, 0 0 50px #ff0000;
+            transform: translate(-50%, -50%);
         }
 
-        @keyframes pulseFade { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-
-        /* --- MAIN CONTENT --- */
-        #main-content {
-            opacity: 0;
-            transition: opacity 2s ease;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 50px 20px;
-            display: none;
+        /* --- UI CONTAINER --- */
+        .container {
+            width: 92%; max-width: 650px;
+            background: rgba(35, 4, 4, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(255, 215, 0, 0.4);
+            border-radius: 35px;
+            padding: clamp(25px, 6vw, 45px);
+            box-shadow: 0 0 60px rgba(0,0,0,0.8), inset 0 0 30px rgba(212, 175, 55, 0.1);
+            text-align: center;
+            opacity: 0; transform: translateY(30px);
+            transition: all 1.2s ease-out;
+            position: relative;
+            z-index: 200;
+            margin: 20px 0;
         }
+        .container.active { opacity: 1; transform: translateY(0); }
 
         h1 {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 3rem;
-            color: var(--antique-gold);
-            text-align: center;
-            letter-spacing: 15px;
-            margin-bottom: 50px;
-            text-shadow: 0 0 30px rgba(243, 207, 122, 0.6);
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(2.8rem, 11vw, 4.8rem);
+            color: var(--gold-glow);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
         }
 
-        .ritual-container {
-            background: rgba(20, 0, 0, 0.6);
-            backdrop-filter: blur(25px);
-            border: 2px solid var(--antique-gold);
-            padding: 50px;
-            border-radius: 0 80px 0 80px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            box-shadow: 0 0 80px rgba(255, 0, 0, 0.2), inset 0 0 20px rgba(243, 207, 122, 0.2);
+        .subtitle { font-family: 'Pinyon Script', cursive; font-size: clamp(1.4rem, 5vw, 2rem); color: #ffb7c5; margin-bottom: 35px; }
+
+        /* --- COMPASS --- */
+        .compass-area {
             position: relative;
+            width: 130px; height: 130px;
+            margin: 0 auto 35px;
         }
+        .compass-svg { width: 100%; height: 100%; filter: drop-shadow(0 0 15px var(--gold-glow)); }
+        .needle { transform-origin: 50% 50%; transition: transform 3.5s cubic-bezier(0.19, 1, 0.22, 1); }
+        .needle-spin { animation: fullSpin 0.4s linear infinite; }
+        @keyframes fullSpin { 100% { transform: rotate(360deg); } }
 
-        @media (max-width: 850px) { .ritual-container { grid-template-columns: 1fr; } }
+        /* --- FORM --- */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
 
-        .field-box label {
-            font-family: 'Cinzel Decorative', serif;
-            font-size: 0.75rem;
-            color: var(--antique-gold);
-            margin-bottom: 12px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            display: block;
-        }
-
+        .field { margin-bottom: 5px; }
+        label { font-family: 'Cinzel Decorative', serif; font-size: 0.75rem; color: var(--gold-glow); display: block; margin-bottom: 8px; text-transform: uppercase; }
+        
         select {
-            background: rgba(0, 0, 0, 0.9);
-            color: #fff;
-            border: 1px solid var(--antique-gold);
-            padding: 16px;
-            border-radius: 15px;
-            font-family: 'Playfair Display', serif;
-            width: 100%;
+            width: 100%; padding: 14px;
+            background: rgba(15, 0, 0, 0.9);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 12px;
+            color: var(--ivory-silk);
+            font-family: 'Montserrat', sans-serif;
             outline: none;
             cursor: pointer;
-            transition: all 0.4s ease;
+            transition: 0.3s;
         }
-        select:hover { 
-            box-shadow: 0 0 30px var(--magic-glow);
-            border-color: var(--passion-red);
-            background: #1a0000;
-        }
+        select:focus { border-color: var(--gold-glow); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
 
-        .magic-btn {
-            padding: 25px 120px;
-            background: linear-gradient(45deg, var(--deep-crimson), var(--passion-red), var(--deep-crimson));
-            background-size: 200% auto;
-            color: #fff;
-            border: 2px solid var(--antique-gold);
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 1.6rem;
-            letter-spacing: 10px;
-            cursor: pointer;
-            border-radius: 100px;
-            transition: 0.5s;
-            animation: gradientMove 3s infinite;
-        }
-        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
-        .magic-btn:hover {
-            transform: scale(1.08) translateY(-5px);
-            box-shadow: 0 0 60px var(--passion-red), 0 0 20px var(--bright-gold);
-            letter-spacing: 14px;
-        }
-
-        /* --- RESULTS --- */
-        #result-panel { display: none; margin-top: 100px; animation: fairyFade 3s forwards; }
-        @keyframes fairyFade { from { opacity: 0; filter: blur(20px); } to { opacity: 1; filter: blur(0); } }
-
-        .result-card {
-            background: #000;
-            border: 3px solid var(--antique-gold);
+        .btn-magic {
+            grid-column: 1 / -1;
+            padding: 20px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #800f2f, #590d22);
+            border: 1px solid var(--gold-glow);
             border-radius: 60px;
-            overflow: hidden;
-            box-shadow: 0 0 120px rgba(255, 0, 0, 0.4);
+            color: var(--gold-glow);
+            font-family: 'Cinzel Decorative', serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+        }
+        .btn-magic:hover { 
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.25);
+            filter: brightness(1.2);
         }
 
-        .img-container { height: 600px; overflow: hidden; position: relative; }
-        .img-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #000, transparent); }
-        #res-img { width: 100%; height: 100%; object-fit: cover; transition: 20s linear; }
+        /* --- RESULT --- */
+        #result-card { display: none; animation: popIn 0.8s forwards; position: relative; }
+        @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        .res-text { padding: 80px; text-align: center; }
-        .res-text h2 { font-family: 'Great Vibes'; font-size: 6.5rem; color: var(--antique-gold); margin-bottom: 30px; text-shadow: 0 0 20px var(--passion-red); }
+        .result-click-zone { cursor: pointer; transition: 0.3s; padding: 15px; border-radius: 20px; }
+        .result-click-zone:hover { background: rgba(255, 255, 255, 0.05); }
 
-        /* --- EFFECTS --- */
+        .result-img {
+            width: 100%; height: 280px;
+            object-fit: cover;
+            border-radius: 20px;
+            border: 2px solid var(--gold-glow);
+            margin-bottom: 25px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.6);
+        }
+        .result-title { 
+            font-family: 'Great Vibes', cursive; 
+            font-size: clamp(2.5rem, 9vw, 3.8rem); 
+            color: var(--gold-glow); 
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .result-desc { font-style: italic; color: #ffb7c5; font-size: 1.1rem; line-height: 1.6; margin-bottom: 25px; }
+
+        /* --- WISH LANTERN AREA --- */
+        .lantern-area {
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 215, 0, 0.15);
+            padding-top: 30px;
+        }
+        .wish-lantern {
+            background: linear-gradient(to bottom, #ffcc33, #ff6600);
+            padding: 20px; border-radius: 50% 50% 10% 10%;
+            color: #2d0b0b;
+            font-family: 'Pinyon Script', cursive; font-size: 1.6rem;
+            box-shadow: 0 0 30px rgba(255, 150, 0, 0.6);
+            max-width: 300px; margin: 0 auto;
+            animation: lanternFloat 4s infinite ease-in-out;
+            border: 2px solid #ffd700;
+        }
+        @keyframes lanternFloat {
+            0%, 100% { transform: translateY(0) rotate(-1deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        .wish-lantern input {
+            background: rgba(255,255,255,0.2); border: none; border-bottom: 2px solid #2d0b0b;
+            width: 80%; text-align: center; color: #2d0b0b; font-family: inherit; font-size: 1.2rem;
+            outline: none; margin-bottom: 10px;
+        }
+
+        /* --- VIBE BAR --- */
+        #vibe-bar {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 20px; z-index: 1000;
+            background: rgba(0,0,0,0.8); padding: 10px 25px; border-radius: 50px;
+            backdrop-filter: blur(12px); border: 1px solid rgba(255,215,0,0.3);
+        }
+        .vibe-icon { font-size: 1.6rem; cursor: pointer; transition: 0.3s; }
+        .vibe-icon:hover { transform: scale(1.4) rotate(10deg); color: var(--gold-glow); }
+
+        /* Floating effects on click */
         .sparkle {
-            position: absolute; pointer-events: none; z-index: 9999;
-            animation: explode 1.5s forwards cubic-bezier(0, 0.5, 0.5, 1);
+            position: absolute; pointer-events: none; font-size: 2rem;
+            animation: sparkleAnim 1.5s forwards; z-index: 10007;
         }
-        @keyframes explode {
-            0% { transform: scale(1); opacity: 1; }
-            100% { transform: translate(var(--x), var(--y)) scale(0) rotate(360deg); opacity: 0; }
+        @keyframes sparkleAnim {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -150%) scale(2); opacity: 0; }
         }
 
-        .izmir-spirit { position: fixed; bottom: 30px; left: 30px; font-size: 4rem; opacity: 0.1; filter: sepia(1) saturate(5); }
     </style>
 </head>
 <body>
 
-    <div id="fairy-bg"></div>
-    <div id="magic-cursor"></div>
-    <div class="izmir-spirit">🕊️✨🎡</div>
+    <div id="red-thread"></div>
+    <div id="magic-bg"></div>
 
-    <!-- Enhanced Intro Screen -->
-    <div id="intro-screen" onclick="startRitual(event)">
-        <div class="ornament top-left"></div>
-        <div class="ornament bottom-right"></div>
-        <h2 class="intro-title">Ritual of Souls</h2>
-        <p class="tap-msg">INVOKE THE MAGIC</p>
+    <!-- Intro: Soul Convergence -->
+    <div id="intro-overlay" onclick="revealApp()" ontouchstart="revealApp()">
+        <div class="soul-orb orb-1"></div>
+        <div class="soul-orb orb-2"></div>
+        <div id="intro-message">Gently touch to align your destiny...</div>
     </div>
 
-    <div id="main-content">
-        <h1>IZMIR SOULMATE COMPASS</h1>
+    <!-- Background Sounds -->
+    <audio id="ocean-waves" loop muted><source src="https://assets.mixkit.co/active_storage/sfx/2513/2513-preview.mp3" type="audio/mpeg"></audio>
+    <audio id="sunset-sax" loop><source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg"></audio>
 
-        <div class="ritual-container">
-            <!-- Questions Sync with Variable List -->
-            <div class="field-box">
-                <label>1. Life Stage (x)</label>
-                <select id="v1" onchange="createMagicEffect(event)">
-                    <option value="S">Young Students (S)</option>
-                    <option value="W">White-Collar Pros (W)</option>
-                    <option value="A">Refined Adults (A)</option>
-                    <option value="N">The Nostalgics (N)</option>
-                    <option value="C">Creative Souls (C)</option>
-                </select>
-            </div>
-            <div class="field-box">
-                <label>2. Social Pulse (y)</label>
-                <select id="v2" onchange="createMagicEffect(event)">
-                    <option value="K">Chaos (K)</option>
-                    <option value="R">Rhythmic (R)</option>
-                    <option value="L">Lounge (L)</option>
-                    <option value="Q">Quiet (Q)</option>
-                </select>
-            </div>
-            <div class="field-box">
-                <label>3. Meeting Style (i)</label>
-                <select id="v3" onchange="createMagicEffect(event)">
-                    <option value="B">Bold / Icebreaker (B)</option>
-                    <option value="O">Observer (O)</option>
-                    <option value="P">Pro-Specialist (P)</option>
-                    <option value="T">Fate / Accidental (T)</option>
-                </select>
-            </div>
-            <div class="field-box">
-                <label>4. Venue Aesthetic (v)</label>
-                <select id="v4" onchange="createMagicEffect(event)">
-                    <option value="M">Modern / Neon (M)</option>
-                    <option value="E">Aegean / Boho (E)</option>
-                    <option value="H">Heritage / Noir (H)</option>
-                    <option value="Z">Zen (Z)</option>
-                </select>
-            </div>
-            <div class="field-box">
-                <label>5. Music Taste (m)</label>
-                <select id="v5" onchange="createMagicEffect(event)">
-                    <option value="G">Analog (G)</option>
-                    <option value="J">Digital (J)</option>
-                    <option value="U">Nature (U)</option>
-                    <option value="V">Acoustic (V)</option>
-                </select>
-            </div>
-            <div class="field-box">
-                <label>6. Budget (f)</label>
-                <select id="v6" onchange="createMagicEffect(event)">
-                    <option value="GR">Grass-root (GR)</option>
-                    <option value="ML">Mid-level (ML)</option>
-                    <option value="EX">Executive (EX)</option>
-                    <option value="HG">Hidden Gem (HG)</option>
-                </select>
-            </div>
-            <div class="field-box">
-                <label>7. Transportation (u)</label>
-                <select id="v7" onchange="createMagicEffect(event)">
-                    <option value="FR">Ferry (FR)</option>
-                    <option value="WK">Walking (WK)</option>
-                    <option value="BK">Bike / Skate (BK)</option>
-                    <option value="DR">Driving (DR)</option>
-                </select>
-            </div>
-            <div class="field-box">
-                <label>8. View Preference (p)</label>
-                <select id="v8" onchange="createMagicEffect(event)">
-                    <option value="PL">Panoramic Lights (PL)</option>
-                    <option value="OH">Ocean Horizon (OH)</option>
-                    <option value="TX">Texture (TX)</option>
-                    <option value="GO">Green Oasis (GO)</option>
-                </select>
-            </div>
-            <div class="field-box">
-                <label>9. Timing (t)</label>
-                <select id="v9" onchange="createMagicEffect(event)">
-                    <option value="EB">Early Bird (EB)</option>
-                    <option value="SR">Sunset Ritual (SR)</option>
-                    <option value="MW">Midnight Wanderer (MW)</option>
-                </select>
-            </div>
-            <div class="field-box">
-                <label>10. Weather (w)</label>
-                <select id="v10" onchange="createMagicEffect(event)">
-                    <option value="IB">Imbat Breeze (IB)</option>
-                    <option value="PR">Petrichor (PR)</option>
-                    <option value="WS">Winter Sun (WS)</option>
-                </select>
-            </div>
-            <div class="field-box">
-                <label>11. Hobbies (h)</label>
-                <select id="v11" onchange="createMagicEffect(event)">
-                    <option value="CO">Collector (CO)</option>
-                    <option value="MK">Maker (MK)</option>
-                    <option value="YT">Active / Yoga-Trail (YT)</option>
-                    <option value="IN">Intellectual (IN)</option>
-                    <option value="GZ">Gastronomy Enthusiast (GZ)</option>
-                </select>
-            </div>
-            <div class="field-box">
-                <label>12. Final Intent (z)</label>
-                <select id="v12" onchange="createMagicEffect(event)">
-                    <option value="MC">Meet-Cute (MC)</option>
-                    <option value="DC">Deep Connection (DC)</option>
-                    <option value="FF">Fast Fun (FF)</option>
-                </select>
-            </div>
-            <div class="field-box" style="grid-column: 1 / -1;">
-                <label>13. Clothing Style (s)</label>
-                <select id="v13" onchange="createMagicEffect(event)">
-                    <option value="BO">Boho (BO)</option>
-                    <option value="MN">Minimalist (MN)</option>
-                    <option value="CY">Cyber-Street (CY)</option>
-                </select>
-            </div>
-
-            <div class="btn-wrapper">
-                <button class="magic-btn" onclick="showFate(event)">REVEAL DESTINY</button>
-            </div>
+    <div class="container" id="app-content">
+        <div class="compass-area">
+            <svg class="compass-svg" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="46" fill="none" stroke="gold" stroke-width="0.5" stroke-dasharray="1,2"/>
+                <g id="main-needle" class="needle">
+                    <path d="M50 8 L56 50 L50 92 L44 50 Z" fill="#c1121f"/>
+                    <circle cx="50" cy="50" r="3.5" fill="gold"/>
+                </g>
+            </svg>
         </div>
 
-        <div id="result-panel">
-            <div class="result-card">
-                <div class="img-container">
-                    <img src="" id="res-img">
-                    <div class="img-overlay"></div>
-                </div>
-                <div class="res-text">
-                    <h2 id="res-title"></h2>
-                    <p id="res-desc"></p>
-                    <div style="margin-top: 50px; border-top: 2px solid var(--antique-gold); padding-top: 40px;">
-                        <input type="text" placeholder="Whisper your wish to the stars..." style="background:transparent; border:none; border-bottom:1px solid var(--antique-gold); color:var(--bright-gold); font-family:'Great Vibes'; font-size:2.8rem; width:90%; text-align:center; outline:none;">
-                    </div>
-                </div>
+        <h1>Izmir Soulmate Compass</h1>
+        <p class="subtitle">Where the Aegean wind whispers your name...</p>
+
+        <form id="soul-form" class="form-grid">
+            <div class="field"><label>1. Life Stage</label><select id="p" required><option value="S">Young Student</option><option value="W">White Collar</option><option value="A">Refined Adult</option><option value="N">The Nostalgic</option><option value="C">Creative Soul</option></select></div>
+            <div class="field"><label>2. Vibe Intensity</label><select id="s" required><option value="K">Chaotic Energy</option><option value="R">Rhythmic Pulse</option><option value="L">Chill Lounge</option><option value="Q">Deep Silence</option></select></div>
+            <div class="field"><label>3. Fortune Level</label><select id="b" required><option value="GR">Minimalist</option><option value="ML">Mid-Level</option><option value="EX">Premium</option><option value="HG">Hidden Fortune</option></select></div>
+            <div class="field"><label>4. Frequency</label><select id="m" required><option value="G">Vinyl (Analog)</option><option value="J">Digital (Beat)</option><option value="U">Nature</option><option value="V">Acoustic</option></select></div>
+            <div class="field"><label>5. Persona</label><select id="st" required><option value="BO">Bohemian</option><option value="MN">Minimalist</option><option value="CY">Cyberpunk</option><option value="CH">Classic Chic</option></select></div>
+            <div class="field"><label>6. Landscape</label><select id="v" required><option value="PL">Panorama</option><option value="OH">Endless Sea</option><option value="TX">Historical</option><option value="GO">Secret Garden</option></select></div>
+            <div class="field" style="grid-column: span 2;"><label>7. Time of Encounter</label><select id="t" required><option value="AM">Golden Morning</option><option value="PM">Magical Dusk</option></select></div>
+            
+            <button type="submit" class="btn-magic">Unveil My Destiny</button>
+        </form>
+
+        <div id="result-card">
+            <div class="result-click-zone" id="result-interact">
+                <h2 id="res-name" class="result-title"></h2>
+                <img id="res-img" class="result-img" src="" alt="Destined Location">
+                <p id="res-desc" class="result-desc"></p>
+            </div>
+            <button onclick="location.reload()" class="btn-magic" style="font-size: 0.9rem; width: auto; padding: 15px 40px;">Seek New Fate</button>
+        </div>
+
+        <div class="lantern-area">
+            <div class="wish-lantern" id="wish-box">
+                <p style="margin-bottom: 5px;">A Soul's Wish...</p>
+                <input type="text" id="wish-text" placeholder="...">
+                <button onclick="sendWish()" style="background:none; border:1px solid #2d0b0b; padding: 5px 15px; border-radius: 20px; font-weight: bold; cursor: pointer; display: block; width: 100%; font-family: 'Montserrat'; font-size: 0.7rem;">RELEASE TO THE SKY ✨</button>
             </div>
         </div>
+        
+        <p style="font-size: 0.65rem; margin-top: 35px; opacity: 0.5; letter-spacing: 2px; font-weight: 300;">ASTRO-AESTHETIC PROTOCOL • IZMIR 2026</p>
+    </div>
+
+    <div id="vibe-bar">
+        <span class="vibe-icon" onclick="toggleMute()" id="mute-icon">🔇</span>
+        <span class="vibe-icon" onclick="setVibe('sunset')">🌇</span>
+        <span class="vibe-icon" onclick="setVibe('night')">🌃</span>
+        <span class="vibe-icon">✨</span>
     </div>
 
     <script>
-        const cursor = document.getElementById('magic-cursor');
-        window.addEventListener('mousemove', e => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            if(Math.random() > 0.8) createTail(e.clientX, e.clientY);
+        const thread = document.getElementById('red-thread');
+        const bg = document.getElementById('magic-bg');
+        const overlay = document.getElementById('intro-overlay');
+        const app = document.getElementById('app-content');
+
+        // Particles
+        for(let i=0; i<45; i++) createParticle();
+
+        function createParticle() {
+            const p = document.createElement('div');
+            p.className = 'floating-particle';
+            p.innerHTML = Math.random() > 0.5 ? '✦' : '❤';
+            p.style.setProperty('--d', (Math.random() * 12 + 6) + 's');
+            p.style.setProperty('--o', Math.random());
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.fontSize = (Math.random() * 16 + 10) + 'px';
+            bg.appendChild(p);
+        }
+
+        // Custom Cursor
+        function updateCursor(e) {
+            const x = e.clientX || (e.touches && e.touches[0].clientX);
+            const y = e.clientY || (e.touches && e.touches[0].clientY);
+            if (x && y) {
+                thread.style.left = x + 'px';
+                thread.style.top = y + 'px';
+            }
+        }
+        document.addEventListener('mousemove', updateCursor);
+        document.addEventListener('touchmove', updateCursor);
+
+        let revealed = false;
+        function revealApp() {
+            if(revealed) return;
+            revealed = true;
+            const orb1 = document.querySelector('.orb-1');
+            const orb2 = document.querySelector('.orb-2');
+            orb1.style.transition = 'all 1.2s ease';
+            orb2.style.transition = 'all 1.2s ease';
+            orb1.style.transform = 'translate(0, 0) scale(2.5)';
+            orb2.style.transform = 'translate(0, 0) scale(2.5)';
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                app.classList.add('active');
+                try { document.getElementById('ocean-waves').play(); } catch(e) {}
+            }, 1200);
+        }
+
+        const venues = [
+            { id: "KW", code: "S-K-GR-J-CY-OH-PM", name: "Kordon Sunset Grass 🌅", desc: "Where young souls merge with the Aegean breeze, and the sunset whispers secrets of destiny.", img: "https://images.unsplash.com/photo-1590603740183-980e7f6920eb?w=800" },
+            { id: "RB", code: "S-R-ML-V-CY-TX-PM", name: "Kültürpark Rock Bridge 🎸", desc: "A rebel's haven. Beneath the bridge, live music notes find the thread connecting two hearts.", img: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800" },
+            { id: "HG", code: "S-Q-GR-U-BO-GO-AM", name: "Hasanağa Secret Garden 🌿", desc: "Quiet mornings in nature's embrace. Ancient trees witness the first spark of silence.", img: "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?w=800" },
+            { id: "MLG", code: "W-L-EX-J-MN-PL-PM", name: "Mistral Sky Lounge 🥂", desc: "High above the city lights, amidst modern elegance, a sophisticated connection awaits.", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800" },
+            { id: "DG", code: "C-Q-HG-G-BO-TX-PM", name: "Darağaç Art Hub 🎨", desc: "In the artistic streets of Izmir, creative souls meet through mysterious gallery whispers.", img: "https://images.unsplash.com/photo-1525909002-1b05e0c869d8?w=800" },
+            { id: "PP", code: "W-Q-ML-V-CH-OH-AM", name: "Pasaport Pier ☕", desc: "A classic morning by the ferry. The smell of coffee and the sound of waves bring you together.", img: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800" },
+            { id: "BS", code: "C-R-ML-U-BO-OH-PM", name: "Bostanlı Yasemin Terrace 🍃", desc: "Acoustic melodies and the infinite horizon. Your soulmate is just a sunset away.", img: "https://images.unsplash.com/photo-1514525253361-bee8718a300c?w=800" },
+            { id: "EV", code: "N-R-GR-V-BO-TX-PM", name: "Edit Vintage Alsancak 📻", desc: "Among nostalgic vinyls, find a love that reminds you of pure, timeless eras.", img: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=800" },
+            { id: "HE", code: "N-L-EX-G-CH-PL-PM", name: "The Historical Lift 🏛️", desc: "At the summit of romance. Panoramic views of Izmir for a date that transcends time.", img: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800" },
+            { id: "UV", code: "A-Q-EX-U-MN-GO-PM", name: "Urla Vineyard Path 🍷", desc: "Refined taste, luxury, and the serenity of the vineyards. Destiny is ripe for harvesting.", img: "https://images.unsplash.com/photo-1506377247377-2a5b3b0ca3ef?w=800" }
+        ];
+
+        document.getElementById('soul-form').onsubmit = (e) => {
+            e.preventDefault();
+            const needle = document.getElementById('main-needle');
+            needle.classList.add('needle-spin');
+            
+            const code = [
+                document.getElementById('p').value,
+                document.getElementById('s').value,
+                document.getElementById('b').value,
+                document.getElementById('m').value,
+                document.getElementById('st').value,
+                document.getElementById('v').value,
+                document.getElementById('t').value
+            ].join('-');
+
+            setTimeout(() => {
+                needle.classList.remove('needle-spin');
+                const finalRotation = Math.floor(Math.random() * 360) + 2160;
+                needle.style.transform = `rotate(${finalRotation}deg)`;
+                
+                const match = venues.find(v => v.code === code) || venues[Math.floor(Math.random()*venues.length)];
+                showResult(match);
+            }, 3000);
+        };
+
+        function showResult(venue) {
+            document.getElementById('soul-form').style.display = 'none';
+            const card = document.getElementById('result-card');
+            card.style.display = 'block';
+            document.getElementById('res-name').innerText = venue.name;
+            document.getElementById('res-img').src = venue.img;
+            document.getElementById('res-desc').innerText = venue.desc;
+            
+            // Initial burst
+            burstParticles(window.innerWidth/2, window.innerHeight/2);
+        }
+
+        // Magic interaction on result click
+        document.getElementById('result-interact').addEventListener('click', (e) => {
+            burstParticles(e.clientX, e.clientY);
         });
 
-        function createTail(x, y) {
-            const s = document.createElement('div');
-            s.className = 'gold-dust';
-            s.style.width = '3px';
-            s.style.height = '3px';
-            s.style.left = x + 'px';
-            s.style.top = y + 'px';
-            s.style.opacity = '1';
-            s.style.animation = 'drift 1s forwards';
-            document.body.appendChild(s);
-            setTimeout(() => s.remove(), 1000);
-        }
-
-        function spawnDust() {
-            const bg = document.getElementById('fairy-bg');
-            for(let i=0; i<30; i++) {
-                const d = document.createElement('div');
-                d.className = 'gold-dust';
-                const size = Math.random() * 4 + 1;
-                d.style.width = size + 'px';
-                d.style.height = size + 'px';
-                d.style.left = Math.random() * 100 + 'vw';
-                d.style.top = Math.random() * 100 + 'vh';
-                d.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                d.style.animationDelay = Math.random() * 10 + 's';
-                document.body.appendChild(d);
-            }
-        }
-        spawnDust();
-
-        function startRitual(e) {
-            // Explosive Click Effect
-            for(let i=0; i<60; i++) {
-                const s = document.createElement('div');
-                s.className = 'sparkle';
-                s.innerHTML = ['✨','💖','🌟','🔥'][Math.floor(Math.random()*4)];
-                s.style.left = e.clientX + 'px';
-                s.style.top = e.clientY + 'px';
-                s.style.setProperty('--x', (Math.random() - 0.5) * 1200 + 'px');
-                s.style.setProperty('--y', (Math.random() - 0.5) * 1200 + 'px');
-                document.body.appendChild(s);
-                setTimeout(() => s.remove(), 1500);
-            }
-
-            const intro = document.getElementById('intro-screen');
-            intro.style.opacity = '0';
-            intro.style.transform = 'scale(1.5)';
-            setTimeout(() => {
-                intro.style.display = 'none';
-                const main = document.getElementById('main-content');
-                main.style.display = 'block';
-                setTimeout(() => main.style.opacity = '1', 100);
-            }, 1500);
-        }
-
-        function createMagicEffect(e) {
-            const rect = e.target.getBoundingClientRect();
-            const x = rect.left + rect.width / 2;
-            const y = rect.top + rect.height / 2;
+        function burstParticles(x, y) {
+            const types = ['❤', '❓', '✨', '✦', '💖'];
             for(let i=0; i<15; i++) {
                 const s = document.createElement('div');
                 s.className = 'sparkle';
-                s.innerHTML = '✨';
+                s.innerHTML = types[Math.floor(Math.random() * types.length)];
                 s.style.left = x + 'px';
                 s.style.top = y + 'px';
-                s.style.setProperty('--x', (Math.random() - 0.5) * 300 + 'px');
-                s.style.setProperty('--y', (Math.random() - 0.5) * 300 + 'px');
+                s.style.color = Math.random() > 0.5 ? 'var(--gold-glow)' : 'var(--passion-pink)';
                 document.body.appendChild(s);
-                setTimeout(() => s.remove(), 1000);
+                setTimeout(() => s.remove(), 1500);
             }
         }
 
-        function showFate(e) {
-            createMagicEffect(e);
-            const x = document.getElementById('v1').value;
-            const z = document.getElementById('v12').value;
-            const v = document.getElementById('v4').value;
-            const f = document.getElementById('v6').value;
+        function toggleMute() {
+            const ocean = document.getElementById('ocean-waves');
+            ocean.muted = !ocean.muted;
+            document.getElementById('mute-icon').innerText = ocean.muted ? '🔇' : '🔊';
+        }
 
-            const spots = {
-                "KS": { title: "Kordon Sunset", desc: "A place where thousands of souls witness the daily ritual of the sun. In the chaotic rhythm of the city, your hearts beat in sync with the Aegean Imbat breeze.", img: "https://images.unsplash.com/photo-1590610991399-6f98721665a5?auto=format&fit=crop&w=1200" },
-                "EV": { title: "The Elevator", desc: "Climb towards the stars. A heritage of love where the panoramic lights of Izmir illuminate the deep connection you've been waiting for.", img: "https://images.unsplash.com/photo-1541339902293-d074362efa91?auto=format&fit=crop&w=1200" },
-                "LG": { title: "La Cigale Noir", desc: "Candlelight, red wine, and the whisper of heritage. A sophisticated encounter for refined adults who seek a mature and analog romance.", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200" },
-                "KP": { title: "Küçük Park Pulse", desc: "The energy of youth. A meet-cute happening in the rhythmic chaos of Bornova, where bold icebreakers lead to accidental fate.", img: "https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200" },
-                "MT": { title: "Mistral Neon", desc: "Cyber-street fashion under the digital moon. For the midnight wanderers seeking fast fun amidst the texture of modern luxury.", img: "https://images.unsplash.com/photo-1574096079513-d8259312b785?auto=format&fit=crop&w=1200" },
-                "AS": { title: "Zen Gallery", desc: "The quiet intellectual oasis. Where creative makers find each other in the silent texture of art and petrichor.", img: "https://images.unsplash.com/photo-1518998053901-5348d3961a04?auto=format&fit=crop&w=1200" }
-            };
+        function setVibe(type) {
+            const sunset = document.getElementById('sunset-sax');
+            if(type === 'sunset') { sunset.play(); }
+            else { sunset.pause(); }
+        }
 
-            let res = spots["KS"];
-            if(x === 'S') res = spots["KP"];
-            else if(x === 'A' || f === 'EX') res = spots["LG"];
-            else if(x === 'N' || z === 'DC') res = spots["EV"];
-            else if(x === 'C' || v === 'Z') res = spots["AS"];
-            else if(v === 'M' && z === 'FF') res = spots["MT"];
-
-            document.getElementById('res-img').src = res.img;
-            document.getElementById('res-title').innerText = res.title;
-            document.getElementById('res-desc').innerText = res.desc;
+        function sendWish() {
+            const input = document.getElementById('wish-text');
+            if(!input.value) return;
+            const msg = input.value;
+            const box = document.getElementById('wish-box');
+            box.style.transition = 'all 1s ease';
+            box.style.transform = 'translateY(-100px) scale(0.1)';
+            box.style.opacity = '0';
             
-            document.getElementById('result-panel').style.display = 'block';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-
-            // Final Explosion
-            for(let i=0; i<80; i++) {
-                const s = document.createElement('div');
-                s.className = 'sparkle';
-                s.innerHTML = ['💖','✨','🌟'][Math.floor(Math.random()*3)];
-                s.style.left = e.clientX + 'px';
-                s.style.top = e.clientY + 'px';
-                s.style.setProperty('--x', (Math.random() - 0.5) * 1000 + 'px');
-                s.style.setProperty('--y', (Math.random() - 0.5) * 1000 + 'px');
-                document.body.appendChild(s);
-                setTimeout(() => s.remove(), 2500);
-            }
+            setTimeout(() => {
+                box.innerHTML = `<div style="padding: 10px; font-size: 1rem;">Your wish "${msg}" is now drifting through the Izmir night sky... ✨</div>`;
+                box.style.transform = 'translateY(0) scale(1)';
+                box.style.opacity = '1';
+                box.style.background = 'rgba(255,215,0,0.2)';
+                box.style.borderRadius = '20px';
+                box.style.color = 'var(--gold-glow)';
+            }, 1000);
         }
     </script>
 </body>
