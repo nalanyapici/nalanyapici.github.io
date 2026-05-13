@@ -194,6 +194,7 @@
             border: 2px solid var(--gold-glow);
             margin-bottom: 20px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+            background-color: #1a0505;
         }
 
         .result-title { 
@@ -325,7 +326,7 @@
 
         <div id="result-card">
             <h2 id="res-name" class="result-title"></h2>
-            <img id="res-img" class="result-img" src="" alt="Venue Image">
+            <img id="res-img" class="result-img" src="" alt="Venue Image" onerror="this.src='https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800'">
             <p id="res-desc" class="result-desc"></p>
             <button onclick="location.reload()" class="btn-magic" style="width: auto; padding: 15px 45px;">Rediscover</button>
         </div>
@@ -339,7 +340,7 @@
     </div>
 
     <script>
-        // UPDATED 18 VENUES WITH CONFIRMED IMAGES
+        // CONFIRMED IMAGES FOR ALL 18 VENUES
         const venues = {
             "KW": { name: "Kordon Sunset Grass", desc: "The iconic sunset spot where students gather on the grass. Lively and sincere.", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800" },
             "RB": { name: "Rock Bridge (K. Park)", desc: "A chance encounter with a rebellious soulmate during a live performance in Kültürpark.", img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800" },
@@ -363,8 +364,7 @@
 
         function findDestiny(selections) {
             const { x, y, f, m, s, p, t } = selections;
-
-            // Logic matching the 18 paths exactly
+            // 18 STRICT LOGIC PATHS
             if (x==='S' && y==='K' && f==='GR' && m==='J' && s==='CY' && p==='OH' && t==='PM') return venues.KW;
             if (x==='S' && y==='R' && f==='ML' && m==='V' && s==='CY' && p==='TX' && t==='PM') return venues.RB;
             if (x==='S' && y==='Q' && f==='GR' && m==='U' && s==='BO' && p==='GO' && t==='AM') return venues.HG;
@@ -442,9 +442,7 @@
                 p: document.getElementById('p').value,
                 t: document.getElementById('t').value
             };
-            
             const match = findDestiny(selections);
-
             document.getElementById('soul-form').style.display = 'none';
             document.querySelector('.subtitle').style.display = 'none';
             document.getElementById('result-card').style.display = 'block';
