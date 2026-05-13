@@ -171,6 +171,7 @@
             outline: none;
             cursor: pointer;
             transition: 0.3s;
+            font-size: 0.85rem;
         }
         select:focus { border-color: var(--gold-glow); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
 
@@ -299,13 +300,81 @@
         <p class="subtitle">Where the Aegean wind whispers your name...</p>
 
         <form id="soul-form" class="form-grid">
-            <div class="field"><label>1. Life Stage</label><select id="p" required><option value="S">Young Student</option><option value="W">White Collar</option><option value="A">Refined Adult</option><option value="N">The Nostalgic</option><option value="C">Creative Soul</option></select></div>
-            <div class="field"><label>2. Vibe Intensity</label><select id="s" required><option value="K">Chaotic Energy</option><option value="R">Rhythmic Pulse</option><option value="L">Chill Lounge</option><option value="Q">Deep Silence</option></select></div>
-            <div class="field"><label>3. Fortune Level</label><select id="b" required><option value="GR">Minimalist</option><option value="ML">Mid-Level</option><option value="EX">Premium</option><option value="HG">Hidden Fortune</option></select></div>
-            <div class="field"><label>4. Frequency</label><select id="m" required><option value="G">Vinyl (Analog)</option><option value="J">Digital (Beat)</option><option value="U">Nature</option><option value="V">Acoustic</option></select></div>
-            <div class="field"><label>5. Persona</label><select id="st" required><option value="BO">Bohemian</option><option value="MN">Minimalist</option><option value="CY">Cyberpunk</option><option value="CH">Classic Chic</option></select></div>
-            <div class="field"><label>6. Landscape</label><select id="v" required><option value="PL">Panorama</option><option value="OH">Endless Sea</option><option value="TX">Historical</option><option value="GO">Secret Garden</option></select></div>
-            <div class="field" style="grid-column: span 2;"><label>7. Time of Encounter</label><select id="t" required><option value="AM">Golden Morning</option><option value="PM">Magical Dusk</option></select></div>
+            <!-- 1. Persona / Life Stage -->
+            <div class="field">
+                <label>1. Persona & Stage</label>
+                <select id="p" required>
+                    <option value="S">Young Students (Energetic & Campus)</option>
+                    <option value="W">White-Collar Pros (Corporate & Networking)</option>
+                    <option value="A">Refined Adults (Quality & Maturity)</option>
+                    <option value="N">The Nostalgics (Vintage souls & Old İzmir)</option>
+                    <option value="C">Creative Souls (Artists & Dreamers)</option>
+                </select>
+            </div>
+            
+            <!-- 2. Social Pulse / Density -->
+            <div class="field">
+                <label>2. Social Pulse</label>
+                <select id="s" required>
+                    <option value="K">Chaos (High Energy & Loud)</option>
+                    <option value="R">Rhythmic (Lively & Balanced)</option>
+                    <option value="L">Lounge (Relaxed & Chilled)</option>
+                    <option value="Q">Quiet (Intimate & Peaceful)</option>
+                </select>
+            </div>
+
+            <!-- 3. Budget / Financial Context -->
+            <div class="field">
+                <label>3. Budget Level</label>
+                <select id="b" required>
+                    <option value="GR">Grass-root (Affordable & Casual)</option>
+                    <option value="ML">Mid-level (Standard Bistro/Café)</option>
+                    <option value="EX">Executive (High-end & Luxury)</option>
+                    <option value="HG">Hidden Gem (Value-driven Unique Finds)</option>
+                </select>
+            </div>
+
+            <!-- 4. Music Type -->
+            <div class="field">
+                <label>4. Auditory Frequency</label>
+                <select id="m" required>
+                    <option value="G">Analog (Vinyl & Retro Radio)</option>
+                    <option value="J">Digital (Electronic & Modern Beats)</option>
+                    <option value="U">Nature (Sea Waves & Wind)</option>
+                    <option value="V">Acoustic (Live Performance & Raw)</option>
+                </select>
+            </div>
+
+            <!-- 5. Style Match / Fashion Vibe -->
+            <div class="field">
+                <label>5. Style Match</label>
+                <select id="st" required>
+                    <option value="BO">Boho (Eclectic & Free-spirited)</option>
+                    <option value="MN">Minimalist (Sleek & Sophisticated)</option>
+                    <option value="CY">Cyber-Street (Modern & Futuristic)</option>
+                    <option value="CH">Classic Chic (Elegant & Polished)</option>
+                </select>
+            </div>
+
+            <!-- 6. View Preference -->
+            <div class="field">
+                <label>6. View Preference</label>
+                <select id="v" required>
+                    <option value="PL">Panoramic Lights (Cityscape View)</option>
+                    <option value="OH">Ocean Horizon (Sea & Sunsets)</option>
+                    <option value="TX">Historical Texture (Narrow Streets)</option>
+                    <option value="GO">Green Oasis (Parks & Botanical)</option>
+                </select>
+            </div>
+
+            <!-- 7. Time of Day -->
+            <div class="field" style="grid-column: span 2;">
+                <label>7. Time of Encounter</label>
+                <select id="t" required>
+                    <option value="AM">Golden Morning (Brunch & Coffee)</option>
+                    <option value="PM">Sunset / Nightfall (Nightlife & Lights)</option>
+                </select>
+            </div>
             
             <button type="submit" class="btn-magic">Unveil My Destiny</button>
         </form>
@@ -373,12 +442,6 @@
         function revealApp() {
             if(revealed) return;
             revealed = true;
-            const orb1 = document.querySelector('.orb-1');
-            const orb2 = document.querySelector('.orb-2');
-            orb1.style.transition = 'all 1.2s ease';
-            orb2.style.transition = 'all 1.2s ease';
-            orb1.style.transform = 'translate(0, 0) scale(2.5)';
-            orb2.style.transform = 'translate(0, 0) scale(2.5)';
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
@@ -387,6 +450,7 @@
             }, 1200);
         }
 
+        // Expanded Venues Database
         const venues = [
             { id: "KW", code: "S-K-GR-J-CY-OH-PM", name: "Kordon Sunset Grass 🌅", desc: "Where young souls merge with the Aegean breeze, and the sunset whispers secrets of destiny.", img: "https://images.unsplash.com/photo-1590603740183-980e7f6920eb?w=800" },
             { id: "RB", code: "S-R-ML-V-CY-TX-PM", name: "Kültürpark Rock Bridge 🎸", desc: "A rebel's haven. Beneath the bridge, live music notes find the thread connecting two hearts.", img: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800" },
@@ -420,6 +484,7 @@
                 const finalRotation = Math.floor(Math.random() * 360) + 2160;
                 needle.style.transform = `rotate(${finalRotation}deg)`;
                 
+                // Fuzzy match or random fallback
                 const match = venues.find(v => v.code === code) || venues[Math.floor(Math.random()*venues.length)];
                 showResult(match);
             }, 3000);
@@ -433,11 +498,9 @@
             document.getElementById('res-img').src = venue.img;
             document.getElementById('res-desc').innerText = venue.desc;
             
-            // Initial burst
             burstParticles(window.innerWidth/2, window.innerHeight/2);
         }
 
-        // Magic interaction on result click
         document.getElementById('result-interact').addEventListener('click', (e) => {
             burstParticles(e.clientX, e.clientY);
         });
