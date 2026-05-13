@@ -339,70 +339,51 @@
     </div>
 
     <script>
-        // SPECIFIC 18 VENUES DEFINED BY THE LOGIC DIAGRAM
+        // UPDATED 18 VENUES WITH CONFIRMED IMAGES
         const venues = {
-            "KW": { name: "Kordon Sunset Grass", desc: "The iconic sunset spot where students gather on the grass. Lively and sincere.", img: "https://images.unsplash.com/photo-1590603740183-980e7f6920eb?auto=format&fit=crop&w=800" },
-            "RB": { name: "Rock Bridge (K. Park)", desc: "A chance encounter with a rebellious soulmate during a live performance in Kültürpark.", img: "https://images.unsplash.com/photo-1514525253344-9914d2e74ca6?auto=format&fit=crop&w=800" },
-            "HG": { name: "Hasanağa Garden", desc: "A serene connection during a morning study session in a green sanctuary.", img: "https://images.unsplash.com/photo-1519331379826-f10be5486c6f?auto=format&fit=crop&w=800" },
-            "MLG": { name: "Mistral Sky Lounge", desc: "An elite networking and meeting point for professionals in a luxury atmosphere.", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800" },
-            "DG": { name: "Darağaç Art Hub", desc: "A creative and authentic encounter in industrial art studios.", img: "https://images.unsplash.com/photo-1513364238172-c8f48117193b?auto=format&fit=crop&w=800" },
-            "PP": { name: "Pasaport Pier", desc: "A classic-chic and timeless connection by the sea accompanied by fresh coffee.", img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800" },
-            "BS": { name: "Bostanlı Yasemin Terrace", desc: "Capturing a bohemian spark in an acoustic sunset.", img: "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=800" },
-            "EV": { name: "Edit Vintage (Alsancak)", desc: "Meeting a nostalgic soul while browsing through old vinyl records.", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800" },
-            "AK": { name: "Arkas Art Center", desc: "A sophisticated and cultural meeting ground for art lovers.", img: "https://images.unsplash.com/photo-1554907984-15263bfd63bd?auto=format&fit=crop&w=800" },
-            "HE": { name: "Historical Elevator", desc: "A romantic and timeless moment against city lights at the historic elevator.", img: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?auto=format&fit=crop&w=800" },
-            "KH": { name: "Kızlarağası Coffee", desc: "Authentic textures and a fortune-telling conversation in a traditional atmosphere.", img: "https://images.unsplash.com/photo-1541167760496-162955ed8a9f?auto=format&fit=crop&w=800" },
-            "GL": { name: "Göztepe Old Lanes", desc: "A nostalgic and warm evening walk for neighbors who love history.", img: "https://images.unsplash.com/photo-1514395462725-fb4566210144?auto=format&fit=crop&w=800" },
-            "UV": { name: "Urla Vineyard Way", desc: "A high-end getaway in the lap of nature for refined souls.", img: "https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?auto=format&fit=crop&w=800" },
-            "IC": { name: "İnciraltı Nostalgic Cinema", desc: "Meeting a nature-loving soul under the stars at an open-air cinema.", img: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800" },
+            "KW": { name: "Kordon Sunset Grass", desc: "The iconic sunset spot where students gather on the grass. Lively and sincere.", img: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800" },
+            "RB": { name: "Rock Bridge (K. Park)", desc: "A chance encounter with a rebellious soulmate during a live performance in Kültürpark.", img: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800" },
+            "HG": { name: "Hasanağa Garden", desc: "A serene connection during a morning study session in a green sanctuary.", img: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=800" },
+            "MLG": { name: "Mistral Sky Lounge", desc: "An elite networking and meeting point for professionals in a luxury atmosphere.", img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=800" },
+            "DG": { name: "Darağaç Art Hub", desc: "A creative and authentic encounter in industrial art studios. Where art meets soul.", img: "https://images.unsplash.com/photo-1513364238172-c8f48117193b?auto=format&fit=crop&w=800" },
+            "PP": { name: "Pasaport Pier", desc: "A classic-chic and timeless connection by the sea accompanied by fresh coffee.", img: "https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800" },
+            "BS": { name: "Bostanlı Yasemin Terrace", desc: "Capturing a bohemian spark in an acoustic sunset.", img: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&w=800" },
+            "EV": { name: "Edit Vintage (Alsancak)", desc: "Meeting a nostalgic soul while browsing through old vinyl records.", img: "https://images.unsplash.com/photo-1603048588665-791ca8aea617?auto=format&fit=crop&w=800" },
+            "AK": { name: "Arkas Art Center", desc: "A sophisticated and cultural meeting ground for art lovers.", img: "https://images.unsplash.com/photo-1561839561-b13bcfe95249?auto=format&fit=crop&w=800" },
+            "HE": { name: "Historical Elevator", desc: "A romantic and timeless moment against city lights at the historic elevator.", img: "https://images.unsplash.com/photo-1493134794888-2100c686236e?auto=format&fit=crop&w=800" },
+            "KH": { name: "Kızlarağası Coffee", desc: "Authentic textures and a fortune-telling conversation in a traditional atmosphere.", img: "https://images.unsplash.com/photo-1544126592-807daf21565c?auto=format&fit=crop&w=800" },
+            "GL": { name: "Göztepe Old Lanes", desc: "A nostalgic and warm evening walk for neighbors who love history.", img: "https://images.unsplash.com/photo-1449156001935-d2861525a591?auto=format&fit=crop&w=800" },
+            "UV": { name: "Urla Vineyard Way", desc: "A high-end getaway in the lap of nature for refined souls.", img: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb?auto=format&fit=crop&w=800" },
+            "IC": { name: "İnciraltı Nostalgic Cinema", desc: "Meeting a nature-loving soul under the stars at an open-air cinema.", img: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800" },
             "BT": { name: "Balçova Therapy Hike", desc: "Meeting a wellness-loving partner during a morning hike.", img: "https://images.unsplash.com/photo-1551632432-c735e7a030ed?auto=format&fit=crop&w=800" },
-            "AV": { name: "Alaçatı Stone Streets", desc: "A fashion-forward encounter in a luxury and bohemian environment.", img: "https://images.unsplash.com/photo-1518391846015-55a9cb00bb86?auto=format&fit=crop&w=800" },
-            "BC": { name: "Bayraklı Cyber Coast", desc: "Meeting point for modern night owls in the digital city center.", img: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=800" },
+            "AV": { name: "Alaçatı Stone Streets", desc: "A fashion-forward encounter in a luxury and bohemian environment.", img: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800" },
+            "BC": { name: "Bayraklı Cyber Coast", desc: "Meeting point for modern night owls in the digital city center.", img: "https://images.unsplash.com/photo-1493238792040-d710d73aa993?auto=format&fit=crop&w=800" },
             "KP": { name: "Karşıyaka Passage Cafes", desc: "Retro-spirited friends connecting in hidden analog venues.", img: "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800" }
         };
 
-        // Strict Logical Formulas based on the diagram logic
         function findDestiny(selections) {
             const { x, y, f, m, s, p, t } = selections;
 
-            // 1. Kordon Sunset: S, K, GR, J, CY, OH, PM
+            // Logic matching the 18 paths exactly
             if (x==='S' && y==='K' && f==='GR' && m==='J' && s==='CY' && p==='OH' && t==='PM') return venues.KW;
-            // 2. Rock Bridge: S, R, ML, V, CY, TX, PM
             if (x==='S' && y==='R' && f==='ML' && m==='V' && s==='CY' && p==='TX' && t==='PM') return venues.RB;
-            // 3. Hasanağa Garden: S, Q, GR, U, BO, GO, AM
             if (x==='S' && y==='Q' && f==='GR' && m==='U' && s==='BO' && p==='GO' && t==='AM') return venues.HG;
-            // 4. Mistral Sky: W, L, EX, J, MN, PL, PM
             if (x==='W' && y==='L' && f==='EX' && m==='J' && s==='MN' && p==='PL' && t==='PM') return venues.MLG;
-            // 5. Darağaç Art Hub: C, Q, HG, G, BO, TX, PM
             if (x==='C' && y==='Q' && f==='HG' && m==='G' && s==='BO' && p==='TX' && t==='PM') return venues.DG;
-            // 6. Pasaport Pier: W, Q, ML, V, CH, OH, AM
             if (x==='W' && y==='Q' && f==='ML' && m==='V' && s==='CH' && p==='OH' && t==='AM') return venues.PP;
-            // 7. Bostanlı Terrace: C, R, ML, U, BO, OH, PM
             if (x==='C' && y==='R' && f==='ML' && m==='U' && s==='BO' && p==='OH' && t==='PM') return venues.BS;
-            // 8. Edit Vintage: N, R, GR, V, BO, TX, PM
             if (x==='N' && y==='R' && f==='GR' && m==='V' && s==='BO' && p==='TX' && t==='PM') return venues.EV;
-            // 9. Arkas Art Center: C, Q, EX, U, MN, PL, AM
             if (x==='C' && y==='Q' && f==='EX' && m==='U' && s==='MN' && p==='PL' && t==='AM') return venues.AK;
-            // 10. Historical Elevator: N, L, EX, G, CH, PL, PM
             if (x==='N' && y==='L' && f==='EX' && m==='G' && s==='CH' && p==='PL' && t==='PM') return venues.HE;
-            // 11. Kızlarağası Coffee: N, Q, GR, G, BO, TX, AM
             if (x==='N' && y==='Q' && f==='GR' && m==='G' && s==='BO' && p==='TX' && t==='AM') return venues.KH;
-            // 12. Göztepe Old Lanes: N, Q, HG, U, MN, TX, PM
             if (x==='N' && y==='Q' && f==='HG' && m==='U' && s==='MN' && p==='TX' && t==='PM') return venues.GL;
-            // 13. Urla Vineyard: A, Q, EX, U, MN, GO, PM
             if (x==='A' && y==='Q' && f==='EX' && m==='U' && s==='MN' && p==='GO' && t==='PM') return venues.UV;
-            // 14. İnciraltı Cinema: A, L, GR, G, BO, OH, PM
             if (x==='A' && y==='L' && f==='GR' && m==='G' && s==='BO' && p==='OH' && t==='PM') return venues.IC;
-            // 15. Balçova Therapy: A, Q, HG, U, MN, GO, AM
             if (x==='A' && y==='Q' && f==='HG' && m==='U' && s==='MN' && p==='GO' && t==='AM') return venues.BT;
-            // 16. Alaçatı Streets: C, L, EX, G, BO, TX, PM
             if (x==='C' && y==='L' && f==='EX' && m==='G' && s==='BO' && p==='TX' && t==='PM') return venues.AV;
-            // 17. Bayraklı Cyber: W, K, ML, J, CY, PL, PM
             if (x==='W' && y==='K' && f==='ML' && m==='J' && s==='CY' && p==='PL' && t==='PM') return venues.BC;
-            // 18. Karşıyaka Passage: N, R, ML, G, CH, TX, AM
             if (x==='N' && y==='R' && f==='ML' && m==='G' && s==='CH' && p==='TX' && t==='AM') return venues.KP;
 
-            // Fall-safe logic
             const defaults = { 'S': venues.KW, 'W': venues.MLG, 'A': venues.UV, 'N': venues.KH, 'C': venues.BS };
             return defaults[x] || venues.KW;
         }
