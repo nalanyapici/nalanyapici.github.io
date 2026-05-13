@@ -20,11 +20,11 @@
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
 
         body {
-            background: #050101;
+            background: #020000;
             color: var(--ivory-silk);
             font-family: 'Montserrat', sans-serif;
             min-height: 100vh;
-            overflow-x: hidden;
+            overflow: hidden; /* Prevent scroll for immersion */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -34,283 +34,230 @@
         /* --- IMMERSIVE DEEP BACKGROUND --- */
         #magic-bg {
             position: fixed;
-            inset: -50px; /* Extra margin for parallax movement */
+            inset: -100px;
             z-index: -1;
-            background: 
-                radial-gradient(circle at 50% 50%, #2d0b0b 0%, #050101 100%),
-                url('https://www.transparenttextures.com/patterns/soft-wallpaper.png');
-            transition: transform 0.1s ease-out;
+            background: radial-gradient(circle at center, #1a0505 0%, #020000 100%);
+            transition: transform 0.2s ease-out;
         }
 
-        .star-layer {
+        /* Twinkling Stars */
+        .star {
             position: absolute;
-            inset: 0;
-            pointer-events: none;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle var(--duration) infinite ease-in-out;
         }
 
-        .ambient-particle {
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: var(--max-op); transform: scale(1); box-shadow: 0 0 10px white; }
+        }
+
+        /* Floating Nebulas */
+        .nebula {
             position: absolute;
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
             pointer-events: none;
-            animation: floatContinuous var(--duration) linear infinite;
-            opacity: var(--opacity);
-            color: var(--color);
-            font-size: var(--size);
-            z-index: 1;
-            filter: blur(var(--blur));
-        }
-
-        @keyframes floatContinuous {
-            0% { transform: translateY(110vh) translateX(0) rotate(0deg); }
-            100% { transform: translateY(-20vh) translateX(var(--drift)) rotate(360deg); }
         }
 
         /* --- INTRO SCREEN --- */
         #intro-overlay {
             position: fixed;
             inset: 0;
-            background: radial-gradient(circle, #1a0202 0%, #000 100%);
+            background: #000;
             z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 1.5s ease, visibility 1.5s;
-        }
-
-        .soul-orb {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            filter: blur(80px);
-            mix-blend-mode: screen;
-            opacity: 0.6;
-            pointer-events: none;
-        }
-        .orb-1 { background: var(--passion-pink); animation: orbit 8s infinite ease-in-out; }
-        .orb-2 { background: #00ffff; animation: orbit 8s infinite ease-in-out reverse; }
-
-        @keyframes orbit {
-            0% { transform: translate(-120px, 0) scale(1); }
-            50% { transform: translate(120px, 60px) scale(1.5); }
-            100% { transform: translate(-120px, 0) scale(1); }
+            transition: opacity 1.8s ease, visibility 1.8s;
         }
 
         #intro-message {
             font-family: 'Pinyon Script', cursive;
-            font-size: clamp(2.2rem, 8vw, 3.5rem);
+            font-size: clamp(2rem, 8vw, 3.2rem);
             color: var(--gold-glow);
             text-align: center;
-            z-index: 10001;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
             animation: pulseText 4s infinite;
-            padding: 30px;
+            padding: 40px;
         }
 
         @keyframes pulseText {
-            0%, 100% { opacity: 0.3; transform: scale(0.95); }
-            50% { opacity: 1; transform: scale(1.05); }
+            0%, 100% { opacity: 0.2; transform: scale(0.96); }
+            50% { opacity: 1; transform: scale(1.04); }
         }
 
         /* --- KADER İPİ (RED THREAD) --- */
         .thread-node {
             position: fixed;
-            width: 8px; height: 8px;
+            width: 6px; height: 6px;
             background: #ff0000;
             border-radius: 50%;
             pointer-events: none;
             z-index: 10005;
-            box-shadow: 0 0 12px #ff0000;
+            box-shadow: 0 0 15px #ff0000;
             transform: translate(-50%, -50%);
             opacity: var(--op);
         }
 
         /* --- UI CONTAINER --- */
         .container {
-            width: 92%; max-width: 680px;
-            background: rgba(20, 2, 2, 0.75);
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 215, 0, 0.3);
+            width: 90%; max-width: 620px;
+            background: rgba(15, 2, 2, 0.6);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 215, 0, 0.2);
             border-radius: 40px;
-            padding: clamp(25px, 6vw, 50px);
-            box-shadow: 0 0 80px rgba(0,0,0,0.9), inset 0 0 40px rgba(212, 175, 55, 0.05);
+            padding: clamp(30px, 5vw, 45px);
+            box-shadow: 0 0 100px rgba(0,0,0,0.9);
             text-align: center;
-            opacity: 0; transform: translateY(40px);
-            transition: all 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            opacity: 0; transform: translateY(50px) rotateX(10deg);
+            transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             z-index: 200;
-            margin: 40px 0;
+            max-height: 90vh;
+            overflow-y: auto;
         }
-        .container.active { opacity: 1; transform: translateY(0); }
+        .container::-webkit-scrollbar { width: 0; } /* Hide scrollbar */
+        .container.active { opacity: 1; transform: translateY(0) rotateX(0); }
 
         h1 {
             font-family: 'Great Vibes', cursive;
-            font-size: clamp(2.5rem, 10vw, 4.5rem);
+            font-size: clamp(2.2rem, 9vw, 3.8rem);
             color: var(--gold-glow);
             margin-bottom: 5px;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
         }
 
-        .subtitle { font-family: 'Pinyon Script', cursive; font-size: clamp(1.4rem, 5vw, 1.8rem); color: #ffb7c5; margin-bottom: 40px; }
-
-        /* --- COMPASS --- */
-        .compass-area {
-            position: relative;
-            width: 120px; height: 120px;
-            margin: 0 auto 40px;
-        }
-        .compass-svg { width: 100%; height: 100%; filter: drop-shadow(0 0 15px var(--gold-glow)); }
-        .needle { transform-origin: 50% 50%; transition: transform 4s cubic-bezier(0.19, 1, 0.22, 1); }
-        .needle-spin { animation: fullSpin 0.5s linear infinite; }
-        @keyframes fullSpin { 100% { transform: rotate(360deg); } }
+        .subtitle { font-family: 'Pinyon Script', cursive; font-size: 1.6rem; color: #ffb7c5; margin-bottom: 30px; }
 
         /* --- FORM --- */
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; }
-        @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; text-align: left; }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
 
-        .field { margin-bottom: 5px; }
-        label { font-family: 'Cinzel Decorative', serif; font-size: 0.7rem; color: var(--gold-glow); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.8; }
+        label { font-family: 'Cinzel Decorative', serif; font-size: 0.65rem; color: var(--gold-glow); display: block; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.7; }
         
         select {
-            width: 100%; padding: 15px;
-            background: rgba(30, 0, 0, 0.6);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            border-radius: 14px;
+            width: 100%; padding: 12px;
+            background: rgba(20, 0, 0, 0.5);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 12px;
             color: var(--ivory-silk);
             font-family: 'Montserrat', sans-serif;
             outline: none;
-            transition: 0.4s;
-            font-size: 0.8rem;
-            backdrop-filter: blur(5px);
+            transition: 0.3s;
+            font-size: 0.75rem;
         }
-        select:focus { border-color: var(--gold-glow); background: rgba(50, 0, 0, 0.8); box-shadow: 0 0 20px rgba(255, 215, 0, 0.15); }
+        select:focus { border-color: var(--gold-glow); background: rgba(40, 0, 0, 0.7); }
 
         .btn-magic {
             grid-column: 1 / -1;
-            padding: 22px;
-            margin-top: 25px;
-            background: linear-gradient(135deg, #640d14, #38040e);
+            padding: 18px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #5e0b11, #32020a);
             border: 1px solid var(--gold-glow);
-            border-radius: 60px;
+            border-radius: 50px;
             color: var(--gold-glow);
             font-family: 'Cinzel Decorative', serif;
             font-weight: 700;
-            font-size: 1rem;
-            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 0.9rem;
+            transition: 0.5s;
             text-transform: uppercase;
             letter-spacing: 2px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        .btn-magic:hover { 
-            transform: scale(1.02) translateY(-3px);
-            box-shadow: 0 15px 40px rgba(255, 105, 180, 0.3);
-            filter: brightness(1.2);
-        }
+        .btn-magic:hover { transform: translateY(-3px); filter: brightness(1.2); box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2); }
 
         /* --- RESULT --- */
-        #result-card { display: none; animation: popIn 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; position: relative; }
-        @keyframes popIn { 0% { transform: scale(0.9) translateY(20px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+        #result-card { display: none; animation: popIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
         .result-img {
-            width: 100%; height: 300px;
+            width: 100%; height: 260px;
             object-fit: cover;
-            border-radius: 25px;
+            border-radius: 20px;
             border: 1px solid var(--gold-glow);
-            margin-bottom: 25px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.7);
+            margin-bottom: 20px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.6);
         }
-        .result-title { font-family: 'Great Vibes', cursive; font-size: clamp(2.5rem, 8vw, 3.5rem); color: var(--gold-glow); margin-bottom: 10px; }
-        .result-desc { font-style: italic; color: #ffb7c5; font-size: 1.05rem; line-height: 1.7; margin-bottom: 30px; }
+        .result-title { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--gold-glow); margin-bottom: 5px; }
+        .result-desc { font-style: italic; color: #ffb7c5; font-size: 1rem; line-height: 1.6; margin-bottom: 25px; }
 
-        /* --- PARTICLE EFFECTS --- */
-        .magic-particle {
+        /* --- FINAL EXPLOSION PARTICLES --- */
+        .final-particle {
             position: fixed;
             pointer-events: none;
             z-index: 10010;
-            font-size: 1.5rem;
-            animation: particleFly 1.5s ease-out forwards;
+            font-size: 2rem;
+            animation: finalFly 2s ease-out forwards;
         }
-        @keyframes particleFly {
-            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(var(--tr)); opacity: 0; }
+        @keyframes finalFly {
+            0% { transform: translate(-50%, -50%) scale(0.2); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(2) rotate(var(--tr)); opacity: 0; }
         }
 
         /* --- LANTERN --- */
-        .lantern-area {
-            margin-top: 50px;
-            border-top: 1px solid rgba(255, 215, 0, 0.1);
-            padding-top: 40px;
-        }
+        .lantern-area { margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255, 215, 0, 0.1); }
         .wish-lantern {
             background: linear-gradient(to bottom, #ffcc33, #ff6600);
-            padding: 25px; border-radius: 50% 50% 15% 15%;
+            padding: 20px; border-radius: 50% 50% 15% 15%;
             color: #2d0b0b;
-            font-family: 'Pinyon Script', cursive; font-size: 1.8rem;
-            box-shadow: 0 0 40px rgba(255, 150, 0, 0.5);
-            max-width: 320px; margin: 0 auto;
-            animation: lanternFloat 5s infinite ease-in-out;
+            font-family: 'Pinyon Script', cursive; font-size: 1.6rem;
+            box-shadow: 0 0 40px rgba(255, 150, 0, 0.4);
+            max-width: 280px; margin: 0 auto;
+            animation: lanternFloat 6s infinite ease-in-out;
             border: 1px solid #ffd700;
-            transition: all 1.5s ease;
         }
         @keyframes lanternFloat {
             0%, 100% { transform: translateY(0) rotate(-1deg); }
-            50% { transform: translateY(-15px) rotate(1deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
         }
         .wish-lantern input {
-            background: rgba(255,255,255,0.25); border: none; border-bottom: 2px solid #2d0b0b;
-            width: 85%; text-align: center; color: #2d0b0b; font-family: 'Montserrat'; font-size: 0.9rem;
-            outline: none; margin-bottom: 15px; font-weight: 600;
+            background: rgba(255,255,255,0.2); border: none; border-bottom: 1px solid #2d0b0b;
+            width: 80%; text-align: center; color: #2d0b0b; font-family: 'Montserrat'; font-size: 0.8rem;
+            outline: none; margin-bottom: 10px; font-weight: 600;
         }
 
-        /* --- VIBE BAR --- */
         #vibe-bar {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            display: flex; gap: 20px; z-index: 1000;
-            background: rgba(0,0,0,0.7); padding: 12px 25px; border-radius: 60px;
-            backdrop-filter: blur(15px); border: 1px solid rgba(255,215,0,0.2);
-            align-items: center;
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 15px; z-index: 1000;
+            background: rgba(0,0,0,0.6); padding: 10px 20px; border-radius: 40px;
+            backdrop-filter: blur(10px); border: 1px solid rgba(255,215,0,0.1);
         }
-        .vibe-icon { font-size: 1.4rem; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: none; }
-        .vibe-icon:hover { transform: scale(1.4) rotate(10deg); color: var(--gold-glow); }
+        .vibe-icon { font-size: 1.2rem; transition: 0.3s; }
+        .vibe-icon:hover { transform: scale(1.3); color: var(--gold-glow); }
 
     </style>
 </head>
 <body>
 
-    <div id="magic-bg"></div>
+    <div id="magic-bg">
+        <div class="nebula" style="top: -10%; left: -10%; background: var(--passion-pink);"></div>
+        <div class="nebula" style="bottom: -10%; right: -10%; background: #240046;"></div>
+    </div>
 
-    <!-- Intro: Soul Convergence -->
+    <!-- Intro -->
     <div id="intro-overlay" onclick="revealApp()">
-        <div class="soul-orb orb-1"></div>
-        <div class="soul-orb orb-2"></div>
         <div id="intro-message">Touch to begin your convergence...</div>
     </div>
 
-    <!-- Background Sound -->
     <audio id="ocean-waves" loop muted><source src="https://assets.mixkit.co/active_storage/sfx/2513/2513-preview.mp3" type="audio/mpeg"></audio>
 
     <div class="container" id="app-content">
-        <div class="compass-area">
-            <svg class="compass-svg" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="46" fill="none" stroke="gold" stroke-width="0.3" stroke-dasharray="2,2"/>
-                <g id="main-needle" class="needle">
-                    <path d="M50 6 L56 50 L50 94 L44 50 Z" fill="#9d0208"/>
-                    <circle cx="50" cy="50" r="4" fill="gold"/>
-                </g>
-            </svg>
-        </div>
-
         <h1>Izmir Soulmate Compass</h1>
-        <p class="subtitle">The Aegean winds are whispering your destiny...</p>
+        <p class="subtitle">The Aegean winds are whispering...</p>
 
         <form id="soul-form" class="form-grid">
+            <!-- Questions updated to user request -->
             <div class="field">
                 <label>1. Persona / Life Stage (x)</label>
                 <select id="x" required>
                     <option value="S">Young Students (Energetic, campus-focused)</option>
-                    <option value="W">White-Collar Pros (Corporate, networking)</option>
+                    <option value="W">White-Collar Pros (Corporate, networking-oriented)</option>
                     <option value="A">Refined Adults (Seeking quality and maturity)</option>
-                    <option value="N">The Nostalgics (Vintage souls, Old İzmir)</option>
-                    <option value="C">Creative Souls (Artists and dreamers)</option>
+                    <option value="N">The Nostalgics (Vintage souls, lovers of Old İzmir)</option>
+                    <option value="C">Creative Souls (Artists, designers, and dreamers)</option>
                 </select>
             </div>
             
@@ -318,38 +265,38 @@
                 <label>2. Social Pulse / Density (y)</label>
                 <select id="y" required>
                     <option value="K">Chaos (High energy, crowded, loud)</option>
-                    <option value="R">Rhythmic (Steady flow, lively balance)</option>
+                    <option value="R">Rhythmic (Steady flow, lively but balanced)</option>
                     <option value="L">Lounge (Relaxed, chilled, easy-going)</option>
                     <option value="Q">Quiet (Isolated, intimate, peaceful)</option>
                 </select>
             </div>
 
             <div class="field">
-                <label>3. Budget / Financial (f)</label>
+                <label>3. Budget / Financial Context (f)</label>
                 <select id="f" required>
-                    <option value="GR">Grass-root (Affordable, student-friendly)</option>
+                    <option value="GR">Grass-root (Affordable, student-friendly, casual)</option>
                     <option value="ML">Mid-level (Standard bistro/café pricing)</option>
                     <option value="EX">Executive (High-end, luxury, premium)</option>
-                    <option value="HG">Hidden Gem (Value-driven, unique finds)</option>
+                    <option value="HG">Hidden Gem (Value-driven, unique finds over price)</option>
                 </select>
             </div>
 
             <div class="field">
                 <label>4. Music Type (m)</label>
                 <select id="m" required>
-                    <option value="G">Analog (Vinyl, retro radio, nostalgic)</option>
-                    <option value="J">Digital (Electronic, techno, modern)</option>
-                    <option value="U">Nature (Sea waves, wind, ambient)</option>
-                    <option value="V">Acoustic (Live, guitar, raw vocals)</option>
+                    <option value="G">Analog (Vinyl, retro radio, nostalgic vibes)</option>
+                    <option value="J">Digital (Electronic, techno, modern beats)</option>
+                    <option value="U">Nature (Sea waves, wind, natural ambience)</option>
+                    <option value="V">Acoustic (Live performance, guitar, raw vocals)</option>
                 </select>
             </div>
 
             <div class="field">
-                <label>5. Style Match / Fashion (s)</label>
+                <label>5. Style Match / Fashion Vibe (s)</label>
                 <select id="s" required>
                     <option value="BO">Boho (Eclectic, free-spirited, artistic)</option>
                     <option value="MN">Minimalist (Sleek, clean, sophisticated)</option>
-                    <option value="CY">Cyber-Street (Modern, streetwear)</option>
+                    <option value="CY">Cyber-Street (Modern, futuristic, streetwear)</option>
                     <option value="CH">Classic Chic (Elegant, formal, polished)</option>
                 </select>
             </div>
@@ -357,18 +304,18 @@
             <div class="field">
                 <label>6. View Preference (p)</label>
                 <select id="p" required>
-                    <option value="PL">Panoramic Lights (Cityscape, birds-eye)</option>
-                    <option value="OH">Ocean Horizon (Direct sea view, ferries)</option>
-                    <option value="TX">Texture (Historic, narrow stone streets)</option>
-                    <option value="GO">Green Oasis (Parks, botanical vibes)</option>
+                    <option value="PL">Panoramic Lights (Cityscape, birds-eye view)</option>
+                    <option value="OH">Ocean Horizon (Direct sea view, ferries, sunset)</option>
+                    <option value="TX">Texture (Historical architecture, narrow stone streets)</option>
+                    <option value="GO">Green Oasis (Parks, gardens, botanical vibes)</option>
                 </select>
             </div>
 
             <div class="field" style="grid-column: span 2;">
                 <label>7. Time of Day (t)</label>
                 <select id="t" required>
-                    <option value="AM">Golden Morning (Brunch, early sunshine)</option>
-                    <option value="PM">Sunset / Nightfall (City lights, nightlife)</option>
+                    <option value="AM">Golden Morning (Brunch, coffee, early sunshine)</option>
+                    <option value="PM">Sunset / Nightfall (Evening drinks, city lights, nightlife)</option>
                 </select>
             </div>
             
@@ -379,69 +326,55 @@
             <h2 id="res-name" class="result-title"></h2>
             <img id="res-img" class="result-img" src="" alt="Fate Venue">
             <p id="res-desc" class="result-desc"></p>
-            <button onclick="location.reload()" class="btn-magic" style="font-size: 0.8rem; width: auto; padding: 15px 40px;">Restart Journey</button>
+            <button onclick="location.reload()" class="btn-magic" style="width: auto; padding: 15px 40px;">Restart Journey</button>
         </div>
 
         <div class="lantern-area">
             <div class="wish-lantern" id="wish-box">
-                <p style="margin-bottom: 10px;">Make a Wish...</p>
-                <input type="text" id="wish-text" placeholder="Type your heart's desire...">
-                <button onclick="sendWish()" style="background:none; border:1.5px solid #2d0b0b; padding: 8px 15px; border-radius: 20px; font-weight: bold; width: 100%; font-family: 'Montserrat'; font-size: 0.75rem; letter-spacing: 1px;">RELEASE TO THE SKY ✨</button>
+                <p style="margin-bottom: 8px;">Make a Wish...</p>
+                <input type="text" id="wish-text" placeholder="Type here...">
+                <button onclick="sendWish()" style="background:none; border:1px solid #2d0b0b; padding: 5px 15px; border-radius: 20px; font-weight: bold; width: 100%; font-family: 'Montserrat'; font-size: 0.7rem;">RELEASE TO THE SKY ✨</button>
             </div>
         </div>
         
-        <p style="font-size: 0.6rem; margin-top: 40px; opacity: 0.4; letter-spacing: 3px; font-weight: 300;">CONVERGENCE PROTOCOL • IZMIR 2026</p>
+        <p style="font-size: 0.55rem; margin-top: 30px; opacity: 0.3; letter-spacing: 4px;">CONVERGENCE PROTOCOL • 2026</p>
     </div>
 
     <div id="vibe-bar">
         <span class="vibe-icon" onclick="toggleMute()" id="mute-icon">🔇</span>
-        <span class="vibe-icon" onclick="addMoreMagic()">💖</span>
         <span class="vibe-icon" onclick="location.reload()">🔄</span>
     </div>
 
     <script>
-        // --- PARALLAX EFFECT ---
-        document.addEventListener('mousemove', (e) => {
-            const x = (window.innerWidth / 2 - e.clientX) / 40;
-            const y = (window.innerHeight / 2 - e.clientY) / 40;
-            document.getElementById('magic-bg').style.transform = `translate(${x}px, ${y}px) scale(1.1)`;
-        });
-
-        // --- AMBIENT PARTICLES ---
-        function createAmbientParticles() {
+        // --- STAR GENERATOR ---
+        function createStars() {
             const bg = document.getElementById('magic-bg');
-            const icons = ['✨', '❤', '⭐', '🌸', '💫', '•'];
-            const colors = ['#ffd700', '#ff69b4', '#ffffff', '#ffb7c5', '#00ffff'];
-            
-            for(let i=0; i<60; i++) {
-                const p = document.createElement('div');
-                p.className = 'ambient-particle';
-                p.innerHTML = icons[Math.floor(Math.random() * icons.length)];
-                
-                const duration = 20 + Math.random() * 30;
-                const size = 0.5 + Math.random() * 1.2;
-                const opacity = 0.05 + Math.random() * 0.3;
-                const left = Math.random() * 100;
-                const drift = (Math.random() - 0.5) * 300;
-                const blur = Math.random() * 3;
-                
-                p.style.setProperty('--duration', duration + 's');
-                p.style.setProperty('--opacity', opacity);
-                p.style.setProperty('--size', size + 'rem');
-                p.style.setProperty('--drift', drift + 'px');
-                p.style.setProperty('--color', colors[Math.floor(Math.random()*colors.length)]);
-                p.style.setProperty('--blur', blur + 'px');
-                p.style.left = left + 'vw';
-                p.style.animationDelay = (Math.random() * -50) + 's';
-                
-                bg.appendChild(p);
+            for(let i=0; i<150; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 2.5 + 0.5;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+                star.style.setProperty('--max-op', Math.random() * 0.7 + 0.3);
+                star.style.animationDelay = Math.random() * 5 + 's';
+                bg.appendChild(star);
             }
         }
 
-        // --- MAGIC THREAD (KADER İPİ) ---
+        // --- PARALLAX ---
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.clientX) / 60;
+            const y = (window.innerHeight / 2 - e.clientY) / 60;
+            document.getElementById('magic-bg').style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        // --- MAGIC THREAD ---
         const coords = { x: window.innerWidth/2, y: window.innerHeight/2 };
         const circles = [];
-        const circleCount = 18;
+        const circleCount = 15;
 
         for (let i = 0; i < circleCount; i++) {
             const div = document.createElement('div');
@@ -451,16 +384,10 @@
             circles.push({ x: coords.x, y: coords.y, element: div });
         }
 
-        const updateCoords = (e) => {
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            coords.x = clientX;
-            coords.y = clientY;
-        };
-
-        window.addEventListener("mousemove", updateCoords);
-        window.addEventListener("touchstart", updateCoords);
-        window.addEventListener("touchmove", updateCoords);
+        window.addEventListener("mousemove", (e) => {
+            coords.x = e.clientX;
+            coords.y = e.clientY;
+        });
 
         function animateCircles() {
             let x = coords.x;
@@ -477,23 +404,29 @@
             requestAnimationFrame(animateCircles);
         }
 
-        // --- PARTICLE BURST ---
-        function createExplosion(x, y) {
-            const emojis = ['❤', '💖', '✨', '🌸', '💫', '💎'];
-            for(let i=0; i<12; i++) {
+        // --- FINAL EXPLOSION (Hearts, Stars, Questions) ---
+        function createFinalExplosion() {
+            const emojis = ['❤', '⭐', '❓', '✨', '💖', '💫'];
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+
+            for(let i=0; i<30; i++) {
                 const p = document.createElement('div');
-                p.className = 'magic-particle';
+                p.className = 'final-particle';
                 p.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
-                const tx = (Math.random() - 0.5) * 450;
-                const ty = (Math.random() - 0.5) * 450;
-                const tr = Math.random() * 720;
-                p.style.left = x + 'px';
-                p.style.top = y + 'px';
+                
+                const tx = (Math.random() - 0.5) * 600;
+                const ty = (Math.random() - 0.5) * 600;
+                const tr = Math.random() * 1000;
+                
+                p.style.left = centerX + 'px';
+                p.style.top = centerY + 'px';
                 p.style.setProperty('--tx', tx + 'px');
                 p.style.setProperty('--ty', ty + 'px');
                 p.style.setProperty('--tr', tr + 'deg');
+                
                 document.body.appendChild(p);
-                setTimeout(() => p.remove(), 1500);
+                setTimeout(() => p.remove(), 2000);
             }
         }
 
@@ -511,18 +444,13 @@
         }
 
         const venues = [
-            { id: "S-K-GR-J-CY-OH-PM", name: "Kordon Sunset Grass 🌅", desc: "Where digital beats meet the sound of the waves. Your soulmate is likely holding a beer and laughing at the sunset.", img: "https://images.unsplash.com/photo-1590603740183-980e7f6920eb?w=800" },
-            { id: "W-R-ML-J-MN-PL-PM", name: "Mistral Sky Lounge 🥂", desc: "Sleek, professional, and looking over the city lights. Excellence meets elegance here.", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800" },
-            { id: "A-L-EX-G-MN-TX-AM", name: "Arkas Art Center 🏛", desc: "Quiet sophistication. A shared look over a Renaissance masterpiece might be your beginning.", img: "https://images.unsplash.com/photo-1525909002-1b05e0c869d8?w=800" },
-            { id: "C-Q-HG-V-BO-TX-PM", name: "Daragac Art Hub 🎨", desc: "In the narrow historical streets, creative sparks fly. Look for someone with paint on their hands.", img: "https://images.unsplash.com/photo-1513364238172-c8f48117193b?w=800" },
-            { id: "N-R-GR-G-BO-TX-PM", name: "Kemeraltı Antique Shop 🕯", desc: "For the vintage soul. Destiny hides between old vinyls and dust-covered memories.", img: "https://images.unsplash.com/photo-1572061486195-d8c21859963e?w=800" }
+            { id: "S-K-GR-J-CY-OH-PM", name: "Kordon Sunset 🌅", desc: "Digital beats meet the waves. Your soulmate is laughing at the sunset with a casual drink.", img: "https://images.unsplash.com/photo-1590603740183-980e7f6920eb?w=800" },
+            { id: "W-R-ML-J-MN-PL-PM", name: "Mistral Sky Lounge 🥂", desc: "Corporate elegance with a view. Look for a sleek profile against the city lights.", img: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800" },
+            { id: "C-Q-HG-V-BO-TX-PM", name: "Daragac Art Studio 🎨", desc: "In the narrow streets of art, creative sparks fly. Someone is waiting for a shared vision.", img: "https://images.unsplash.com/photo-1513364238172-c8f48117193b?w=800" }
         ];
 
         document.getElementById('soul-form').onsubmit = (e) => {
             e.preventDefault();
-            const needle = document.getElementById('main-needle');
-            needle.classList.add('needle-spin');
-            
             const selection = [
                 document.getElementById('x').value,
                 document.getElementById('y').value,
@@ -533,20 +461,17 @@
                 document.getElementById('t').value
             ].join('-');
 
+            // Large Reveal
             setTimeout(() => {
-                needle.classList.remove('needle-spin');
-                needle.style.transform = `rotate(${Math.floor(Math.random() * 360) + 1800}deg)`;
-                
                 const match = venues.find(v => v.id === selection) || venues[Math.floor(Math.random()*venues.length)];
-                
                 document.getElementById('soul-form').style.display = 'none';
                 document.getElementById('result-card').style.display = 'block';
                 document.getElementById('res-name').innerText = match.name;
                 document.getElementById('res-img').src = match.img;
                 document.getElementById('res-desc').innerText = match.desc;
                 
-                createExplosion(window.innerWidth/2, window.innerHeight/2);
-            }, 3500);
+                createFinalExplosion(); // The big requested explosion only here
+            }, 1000);
         };
 
         function toggleMute() {
@@ -554,42 +479,26 @@
             ocean.muted = !ocean.muted;
             document.getElementById('mute-icon').innerText = ocean.muted ? '🔇' : '🔊';
         }
-        
-        function addMoreMagic() {
-            createExplosion(window.innerWidth/2, window.innerHeight/2);
-        }
 
         function sendWish() {
             const input = document.getElementById('wish-text');
             if(!input.value) return;
             const wish = input.value;
             const box = document.getElementById('wish-box');
-            
-            box.style.transform = 'translateY(-600px) scale(0.1) rotate(15deg)';
+            box.style.transform = 'translateY(-800px) scale(0) rotate(20deg)';
             box.style.opacity = '0';
-            
             setTimeout(() => {
-                box.innerHTML = `<div style="padding: 10px; font-size: 1.1rem; line-height: 1.4;">"${wish}"<br><span style="font-size:0.8rem; font-family:'Montserrat'">Has been released to the stars. Your heart is heard. ✨</span></div>`;
-                box.style.transition = 'none';
-                box.style.transform = 'translateY(100px) scale(0)';
-                box.style.opacity = '0';
-                
-                setTimeout(() => {
-                    box.style.transition = 'all 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                    box.style.transform = 'translateY(0) scale(1)';
-                    box.style.opacity = '1';
-                    box.style.background = 'rgba(255,215,0,0.2)';
-                    createExplosion(window.innerWidth/2, window.innerHeight*0.7);
-                }, 100);
+                box.innerHTML = `<div style="font-size:1rem; padding:10px;">"${wish}"<br>Is now a star in the Aegean sky. ✨</div>`;
+                box.style.transform = 'translateY(0) scale(1)';
+                box.style.opacity = '1';
+                box.style.background = 'rgba(255,215,0,0.15)';
             }, 1500);
         }
 
         window.onload = () => {
-            createAmbientParticles();
+            createStars();
             animateCircles();
         };
-
-        document.addEventListener('mousedown', (e) => createExplosion(e.clientX, e.clientY));
 
     </script>
 </body>
